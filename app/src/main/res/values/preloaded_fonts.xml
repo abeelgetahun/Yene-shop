@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/afacad</item>
+        <item>@font/bahiana</item>
+        <item>@font/bangers</item>
+        <item>@font/cherry_bomb_one</item>
+        <item>@font/cherry_cream_soda</item>
+    </array>
+</resources>
