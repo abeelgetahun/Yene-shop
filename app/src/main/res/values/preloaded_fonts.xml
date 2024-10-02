@@ -2,8 +2,14 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/afacad</item>
+        <item>@font/alfa_slab_one</item>
+        <item>@font/arbutus</item>
+        <item>@font/atomic_age</item>
         <item>@font/bahiana</item>
+        <item>@font/bakbak_one</item>
         <item>@font/bangers</item>
+        <item>@font/black_ops_one</item>
+        <item>@font/bungee_spice</item>
         <item>@font/cherry_bomb_one</item>
         <item>@font/cherry_cream_soda</item>
     </array>
