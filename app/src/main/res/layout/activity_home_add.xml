@@ -1,56 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fece2f"
     tools:context=".HomeAdd">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="437dp"
-        android:layout_height="278dp"
+        android:layout_width="418dp"
+        android:layout_height="128dp"
+        android:background="#fece2f"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="465dp"
-            android:layout_height="302dp"
-            android:scaleType="fitXY"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/baseyellow" />
 
         <ImageButton
             android:id="@+id/imageButton3"
-            android:layout_width="72dp"
-            android:layout_height="61dp"
-            android:layout_marginEnd="36dp"
+            android:layout_width="87dp"
+            android:layout_height="75dp"
+            android:layout_marginEnd="16dp"
             android:background="#FDCD2F"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.502"
-            app:srcCompat="@drawable/logo" />
+            app:layout_constraintVertical_bias="0.301"
+            app:srcCompat="@drawable/ic_app" />
 
         <ImageButton
-            android:layout_width="45dp"
-            android:layout_height="41dp"
-            android:layout_marginStart="52dp"
+            android:layout_width="25dp"
+            android:layout_height="27dp"
+            android:layout_marginStart="16dp"
             android:background="#00FFC107"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.502"
+            app:layout_constraintVertical_bias="0.158"
             app:srcCompat="@drawable/menu" />
 
         <TextView
@@ -59,298 +50,288 @@
             android:layout_height="35dp"
             android:fontFamily="@font/arbutus"
             android:text="Hi there,"
+            android:textColor="@color/black"
             android:textSize="24sp"
-            tools:layout_editor_absoluteX="76dp"
-            tools:layout_editor_absoluteY="209dp" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="412dp"
-        android:layout_height="105dp"
-        android:layout_marginTop="68dp"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.738" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
-        android:layout_width="413dp"
-        android:layout_height="494dp"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="359dp">
+        android:layout_width="422dp"
+        android:layout_height="120dp"
+        android:layout_margin="0dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="305dp"
-            android:layout_height="366dp"
-            android:background="#fece2f"
-            app:layout_constraintBottom_toBottomOf="parent"
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="420dp"
+            android:layout_height="90dp"
+            android:background="@color/white"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.406">
+            app:srcCompat="@drawable/cropedyellow" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="412dp"
+            android:layout_height="99dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView4">
 
-                <!-- ID input-->
-                <com.google.android.material.textfield.TextInputLayout
+            <androidx.cardview.widget.CardView
+                android:layout_width="75dp"
+                android:layout_height="85dp"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/white"
+                android:padding="50dp"
+                app:cardCornerRadius="20dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/itemid"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <ImageView
+                        android:id="@+id/imageView5"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/white"
-                        android:hint="Enter item ID"
-                        android:textColor="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="44dp"
+                        app:srcCompat="@drawable/add" />
 
-                <!-- Shop Name Input -->
-                <com.google.android.material.textfield.TextInputLayout
+                    <Button
+                        android:id="@+id/addbutton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#fece2f"
+                        android:fontFamily="@font/arbutus"
+                        android:padding="2dp"
+                        android:text="ADD"
+                        android:textColor="@color/white"
+                        android:textColorLink="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="75dp"
+                android:layout_height="85dp"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/white"
+                android:padding="10dp"
+                app:cardCornerRadius="20dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/catagory"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <ImageView
+                        android:id="@+id/imageView6"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter Catagory"
-                        android:textColor="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="45dp"
+                        app:srcCompat="@drawable/sell" />
 
-                <!-- Owner Name Input -->
-                <com.google.android.material.textfield.TextInputLayout
+                    <Button
+                        android:id="@+id/button4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#fece2f"
+                        android:fontFamily="@font/arbutus"
+                        android:padding="2dp"
+                        android:text="SALES"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="75dp"
+                android:layout_height="85dp"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="20dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="0dp">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/itemname"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <ImageView
+                        android:id="@+id/imageView7"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter Item name"
-                        android:textColor="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="47dp"
+                        app:srcCompat="@drawable/storelogo" />
 
-                <com.google.android.material.textfield.TextInputLayout
+                    <Button
+                        android:id="@+id/button5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#fece2f"
+                        android:fontFamily="@font/arbutus"
+                        android:padding="2dp"
+                        android:text="STORE"
+                        android:textColor="@color/white"
+                        android:textColorLink="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="75dp"
+                android:layout_height="85dp"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="20dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/quantity"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <ImageView
+                        android:id="@+id/imageView8"
                         android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        app:srcCompat="@drawable/shopreport" />
+
+                    <Button
+                        android:id="@+id/button6"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="Enter quantity"
-                        android:textColor="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/buyingprice"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Buying price"
-                        android:textColor="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <!-- Shop Name Input -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/sellingprice"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Selling price"
-                        android:textColor="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-        </FrameLayout>
-
+                        android:backgroundTint="#fece2f"
+                        android:fontFamily="@font/arbutus"
+                        android:padding="0dp"
+                        android:text="REPORT"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="413dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:srcCompat="@drawable/yellowmini" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="389dp"
-        android:layout_height="90dp"
-        android:layout_margin="10dp"
-        android:layout_marginTop="17dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+        android:layout_width="414dp"
+        android:layout_height="654dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="40dp"
+        android:paddingTop="20dp"
+        android:paddingRight="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="85dp"
-            android:layout_height="70dp"
-            android:layout_margin="5dp"
-            android:elevation="3dp"
-            app:cardCornerRadius="50dp">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="297dp"
+            android:layout_height="35dp"
+            android:fontFamily="@font/arbutus"
+            android:text="Add items"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
-            <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/itemid"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:hint="item ID"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/add" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
 
-                <Button
-                    android:id="@+id/add"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:backgroundTint="#fece2f"
-                    android:fontFamily="@font/arbutus"
-                    android:padding="5dp"
-                    android:text="ADD"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="86dp"
-            android:layout_height="69dp"
-            android:layout_margin="5dp"
-            android:elevation="3dp"
-            app:cardCornerRadius="50dp">
-
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/catagory"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:hint="catagory"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="33dp"
-                    app:srcCompat="@drawable/sell" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
 
-                <Button
-                    android:id="@+id/sales"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#fece2f"
-                    android:fontFamily="@font/arbutus"
-                    android:padding="5dp"
-                    android:text="SALES"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="85dp"
-            android:layout_height="70dp"
-            android:layout_margin="5dp"
-            android:elevation="3dp"
-            app:cardCornerRadius="50dp">
-
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/itemname"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:hint="item name"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="33dp"
-                    app:srcCompat="@drawable/storelogo" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
 
-                <Button
-                    android:id="@+id/store"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#fece2f"
-                    android:fontFamily="@font/arbutus"
-                    android:padding="5dp"
-                    android:text="STORE"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="85dp"
-            android:layout_height="70dp"
-            android:layout_margin="5dp"
-            android:elevation="3dp"
-            app:cardCornerRadius="50dp">
-
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/quantity"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:hint="quantity"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    app:srcCompat="@drawable/shopreport" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
 
-                <Button
-                    android:id="@+id/report"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#fece2f"
-                    android:fontFamily="@font/arbutus"
-                    android:padding="5dp"
-                    android:text="REPORT"
-                    android:textSize="14sp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/buying"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="buying price"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
 
-
-        </androidx.cardview.widget.CardView>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/selling"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="selling price"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="171dp"
-        android:layout_height="38dp"
-        android:fontFamily="@font/bangers"
-        android:text="ADD Item"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="409dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+

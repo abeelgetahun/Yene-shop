@@ -1,4 +1,4 @@
-package com.example.abel.yeneshop;
+package com.teferi.abel.yeneshop;
 
 import org.junit.Test;
 

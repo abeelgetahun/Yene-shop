@@ -2,4 +2,17 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    ///in below case it is golden
+    <color name="background">#D9B024</color>
+
+    ///brand name will be -Oxblood
+    <color name="brand_name">#4A0404</color>
+
+    ///button color will be purple
+    <color name="btn_color">#6E260E</color>
+
+    /// starting message color -coffee
+    <color name="star_message_color">"#6F4E37"</color>
+
 </resources>

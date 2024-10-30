@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.abel.yeneshop"
+    namespace = "com.teferi.abel.yeneshop"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.abel.yeneshop"
+        applicationId = "com.teferi.abel.yenshop"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -17,12 +17,9 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -32,11 +29,20 @@ android {
 }
 
 dependencies {
+    implementation("com.google.android.material:material:1.10.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
 
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.annotation)
+    implementation(libs.lifecycle.livedata.ktx)
+    implementation(libs.lifecycle.viewmodel.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

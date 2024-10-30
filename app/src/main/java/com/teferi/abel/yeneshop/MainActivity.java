@@ -1,4 +1,4 @@
-package com.example.abel.yeneshop;
+package com.teferi.abel.yeneshop;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     //variable for next page sign up delay
-    private static int Splash=4000;
+    private static int Splash=3000;
 
     // Variables for animation
     Animation topAnim, bottomAnim;
