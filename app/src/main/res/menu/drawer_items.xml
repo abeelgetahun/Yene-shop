@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group_1">
+    <item
+        android:icon="@drawable/ic_menu_allitems"
+        android:id="@+id/navAllItems"
+        android:title="All items" />
+
+    <item
+        android:icon="@drawable/ic_menu_report"
+        android:id="@+id/navReport"
+        android:title="Report by category" />
+    </group>
+
+    <group
+        android:id="@+id/group_2">
+
+    <item
+        android:icon="@drawable/ic_menu_setting"
+        android:id="@+id/navSetting"
+        android:title="Setting" />
+    <item
+        android:icon="@drawable/ic_menu_help"
+        android:id="@+id/navHelp"
+        android:title="Help"/>
+
+    </group>
+
+    <group
+        android:id="@+id/group_3">
+    <item
+        android:icon="@drawable/ic_menu_feedback"
+        android:id="@+id/navFeedback"
+        android:title="Feedback" />
+    <item
+        android:icon="@drawable/ic_menu_about"
+        android:id="@+id/navAbout"
+        android:title="about"/>
+
+    </group>
+
+</menu>

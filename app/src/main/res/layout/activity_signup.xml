@@ -40,7 +40,7 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:gravity="center"
 android:text="Sign up to continue"
-android:textColor="#714E4E"
+android:textColor="@color/star_message_color"
 android:textSize="16sp" />
 
     <!-- Input fields container -->
@@ -63,6 +63,7 @@ android:orientation="vertical">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Owner name"
+        android:inputType="textCapWords"
         android:textColor="@color/black"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
 </com.google.android.material.textfield.TextInputLayout>
@@ -77,6 +78,7 @@ android:orientation="vertical">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
+        android:inputType="textCapWords"
         android:hint="Shop name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
 </com.google.android.material.textfield.TextInputLayout>
@@ -89,7 +91,7 @@ android:orientation="vertical">
         android:layout_height="62dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:backgroundTint="#EBB90B"
+        android:backgroundTint="@color/background"
         android:fontFamily="@font/alfa_slab_one"
         android:padding="3dp"
         android:text="Get Started"

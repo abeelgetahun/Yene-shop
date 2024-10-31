@@ -1,6 +1,8 @@
 package com.teferi.abel.yeneshop;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
@@ -15,14 +17,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-
-    //variable for next page sign up delay
-    private static int Splash=3000;
-
-    // Variables for animation
+    private static int SPLASH_DURATION = 2000;
     Animation topAnim, bottomAnim;
     ImageView image;
     TextView logo, slogan;
+    private static final String PREFERENCES_FILE = "user_data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +48,28 @@ public class MainActivity extends AppCompatActivity {
         logo.setAnimation(bottomAnim);
         slogan.setAnimation(bottomAnim);
 
-        // call next activity
-        new Handler().postDelayed((new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent= new Intent(MainActivity.this,Signup.class);
-                startActivity(intent);
-                finish();
-
+                checkUserLoginStatus();
             }
-        }),Splash);
+        }, SPLASH_DURATION);
+    }
+
+    private void checkUserLoginStatus() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        String ownerName = sharedPreferences.getString("owner_name", null);
+        String shopName = sharedPreferences.getString("shop_name", null);
+
+        Intent intent;
+        if (ownerName != null && shopName != null) {
+            // User has already signed up, go to HomeAdd activity
+            intent = new Intent(MainActivity.this, HomeActivity.class);
+        } else {
+            // User hasn't signed up, go to Signup activity
+            intent = new Intent(MainActivity.this, Signup.class);
+        }
+        startActivity(intent);
+        finish();
     }
 }

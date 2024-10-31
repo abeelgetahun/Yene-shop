@@ -15,7 +15,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="272dp"
-        android:fontFamily="@font/cherry_bomb_one"
+        android:fontFamily="@font/logo_name_font"
         android:text="Yene Shop"
         android:textAlignment="center"
         android:textColor="@color/brand_name"

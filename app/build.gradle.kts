@@ -26,6 +26,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -34,6 +37,9 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.room:room-runtime:2.6.1")
+    implementation(libs.recyclerview)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
     annotationProcessor("androidx.room:room-compiler:2.6.1")
 
     implementation(libs.appcompat)

@@ -12,12 +12,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Signup extends AppCompatActivity {
-
-    // Declare UI elements
-    private EditText etUsername, etShop;
+    private EditText etOwnerName, etShopName;
     private Button btnSignup;
-
-    // SharedPreferences file name
     private static final String PREFERENCES_FILE = "user_data";
 
     @Override
@@ -25,60 +21,66 @@ public class Signup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        // Check if user is already signed up
+        if (isUserSignedUp()) {
+            navigateToHome();
+            return;
+        }
+
         // Initialize UI elements
-        etUsername = findViewById(R.id.shopname);
-        etShop = findViewById(R.id.ownername);
+        etOwnerName = findViewById(R.id.ownername);
+        etShopName = findViewById(R.id.shopname);
         btnSignup = findViewById(R.id.button);
 
-        // Set an OnClickListener for the signup button
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get values from input fields
-                String shop_name = etUsername.getText().toString().trim();
-                String owner_name = etShop.getText().toString().trim();
+                String ownerName = etOwnerName.getText().toString().trim();
+                String shopName = etShopName.getText().toString().trim();
 
-                // Validate the inputs
-                if (TextUtils.isEmpty(shop_name)) {
-                    etUsername.setError("Shop name is required");
+                if (TextUtils.isEmpty(ownerName)) {
+                    etOwnerName.setError("Owner's name is required");
                     return;
                 }
 
-                if (TextUtils.isEmpty(owner_name)) {
-                    etShop.setError("Owner's name is required");
+                if (TextUtils.isEmpty(shopName)) {
+                    etShopName.setError("Shop name is required");
                     return;
                 }
 
-                // Save data in SharedPreferences
-                saveUserData(shop_name, owner_name);
-
-                // Show a success message
+                saveUserData(ownerName, shopName);
                 Toast.makeText(Signup.this, "Signup successful!", Toast.LENGTH_SHORT).show();
-
-                // Navigate to HomeAdd activity
-                Intent intent = new Intent(Signup.this, HomeAdd.class);
-                startActivity(intent);
-
-                // Optionally, you can finish the current activity
-                finish();
+                navigateToHome();
             }
         });
     }
 
-    // Method to save user data in SharedPreferences
-    private void saveUserData(String shop_name, String owner_name) {
+    private boolean isUserSignedUp() {
         SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString("shop", shop_name);
-        editor.putString("owner", owner_name);
-        // Ideally, you should hash the password before storing it
-        editor.apply(); // Save the data
+        String ownerName = sharedPreferences.getString("owner_name", null);
+        String shopName = sharedPreferences.getString("shop_name", null);
+        return ownerName != null && shopName != null;
     }
 
-    // Method to clear input fields after signup
-    private void clearFields() {
-        etUsername.setText("");
-        etShop.setText("");
+    private void saveUserData(String ownerName, String shopName) {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("owner_name", ownerName);
+        editor.putString("shop_name", shopName);
+        editor.apply();
+    }
+
+    private void navigateToHome() {
+        Intent intent = new Intent(Signup.this, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Prevent going back to MainActivity
+        super.onBackPressed();
+        moveTaskToBack(true);
     }
 }
