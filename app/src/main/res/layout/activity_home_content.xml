@@ -43,12 +43,14 @@
         <TextView
             android:id="@+id/textview_shopname"
             android:layout_width="115dp"
-            android:layout_height="20dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="111dp"
             android:fontFamily="@font/arbutus"
             android:text="Store name"
-            android:layout_marginRight="10dp"
             android:textColor="@color/owner_name_color"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tablayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,8 +63,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/arbutus"
             android:text="owner name"
-            android:textSize="20dp"
             android:textColor="@color/owner_name_color"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.158"
@@ -74,12 +76,14 @@
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="0dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            app:tabGravity="fill"
             app:layout_constraintBaseline_toBottomOf="parent"
-            tools:layout_editor_absoluteY="136dp">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tabGravity="fill">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tablayout_add"
@@ -98,6 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Store" />
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tablayout_report"
                 android:layout_width="wrap_content"
@@ -111,5 +116,5 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </LinearLayout>
