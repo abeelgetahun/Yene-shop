@@ -112,16 +112,37 @@ public class HomeActivity extends AppCompatActivity {
                             tab.setIcon(icon);
                         }
 
-                        // Add padding to tabs
+                        // Add spacing between tabs
                         View tabView = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(i);
                         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tabView.getLayoutParams();
-                        params.setMargins(8, 0, 8, 0);
+                        int marginDp = 8;
+                        int marginPx = (int) TypedValue.applyDimension(
+                                TypedValue.COMPLEX_UNIT_DIP,
+                                marginDp,
+                                getResources().getDisplayMetrics()
+                        );
+                        params.setMargins(marginPx, 0, marginPx, 0);
                         tabView.requestLayout();
                     } catch (Resources.NotFoundException e) {
                         e.printStackTrace();
                     }
                 }
             }
+
+            // Add custom tab spacing
+            tabLayout.post(() -> {
+                ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
+                for (int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
+                    View tab = slidingTabStrip.getChildAt(i);
+                    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tab.getLayoutParams();
+                    params.rightMargin = (int) TypedValue.applyDimension(
+                            TypedValue.COMPLEX_UNIT_DIP,
+                            16,  // Increased gap between tabs
+                            getResources().getDisplayMetrics()
+                    );
+                }
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "Error setting up tabs", Toast.LENGTH_SHORT).show();

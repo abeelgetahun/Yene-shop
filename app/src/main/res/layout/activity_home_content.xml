@@ -82,11 +82,14 @@
                 app:tabInlineLabel="false"
                 app:tabMode="fixed"
                 app:tabPadding="8dp"
-                app:tabRippleColor="@null"
-                app:tabSelectedTextColor="@color/black"
+                app:tabRippleColor="@color/btn_color"
+                app:tabSelectedTextColor="@color/white"
+                app:tabIndicatorColor="@color/btn_color"
                 app:tabTextColor="@color/black"
                 app:tabIconTint="@color/black"
-                app:tabIndicatorHeight="0dp" />
+                app:tabIndicatorHeight="5dp"
+                android:clipToPadding="false"
+                android:clipChildren="false" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
