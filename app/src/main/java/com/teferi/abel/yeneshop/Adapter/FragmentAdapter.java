@@ -7,11 +7,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentAdapter extends FragmentPagerAdapter {
-    private final ArrayList<Fragment> fragmentList = new ArrayList<>();
-    private final ArrayList<String> fragmentTitle = new ArrayList<>();
-    private final ArrayList<Integer> fragmentIcons = new ArrayList<>(); // Add this line
+    private final List<Fragment> fragmentList = new ArrayList<>();
+    private final List<String> fragmentTitle = new ArrayList<>();
+    private final List<Integer> fragmentIcons = new ArrayList<>();
 
     public FragmentAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
@@ -29,9 +30,11 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     }
 
     public void addFragment(Fragment fragment, String title, int iconResId) {
-        fragmentList.add(fragment);
-        fragmentTitle.add(title);
-        fragmentIcons.add(iconResId); // Add this line
+        if (fragment != null && title != null) {
+            fragmentList.add(fragment);
+            fragmentTitle.add(title);
+            fragmentIcons.add(iconResId);
+        }
     }
 
     @Nullable

@@ -1,102 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="match_parent">
 
-    <Toolbar
-        android:paddingTop="30dp"
+    <LinearLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/menu_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_menu"
-        android:background="@android:color/transparent"
-        />
-
-    <ImageButton
-        android:id="@+id/toolbar_shoplogo"
-        android:layout_marginRight="20dp"
-        android:scaleType="fitXY"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-
-        android:src="@drawable/ic_app"
-        android:layout_gravity="end"
-        android:background="@android:color/transparent" />
-
-    </Toolbar>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_marginTop="-1dp"
-        android:background="@drawable/background_shape">
-
-        <TextView
-            android:id="@+id/textview_shopname"
-            android:layout_width="115dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="111dp"
-            android:fontFamily="@font/arbutus"
-            android:text="Store name"
-            android:textColor="@color/owner_name_color"
-            app:layout_constraintBottom_toTopOf="@+id/tablayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.03" />
-
-        <TextView
-            android:id="@+id/textview_ownername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/arbutus"
-            android:text="owner name"
-            android:textColor="@color/owner_name_color"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.158"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.185" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tablayout"
+        <Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            app:layout_constraintBaseline_toBottomOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
-            android:background="@color/black"
-            app:tabIconTint="@color/white"
-            app:tabTextColor="@color/white"
-            app:tabIndicatorColor="@color/btn_color"
-            app:tabInlineLabel="true">
-            <!-- Remove the TabItems here as they will be added programmatically -->
-        </com.google.android.material.tabs.TabLayout>
+            android:background="@color/background"
+            android:paddingTop="30dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageButton
+                android:id="@+id/menu_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_menu" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+            <ImageButton
+                android:id="@+id/toolbar_shoplogo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="20dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_app" />
+
+        </Toolbar>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="-1dp"
+            android:background="@drawable/background_shape">
+
+            <TextView
+                android:id="@+id/textview_shopname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/arbutus"
+                android:text="Store name"
+                android:textColor="@color/owner_name_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textview_ownername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/arbutus"
+                android:text="owner name"
+                android:textColor="@color/owner_name_color"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:tabBackground="@drawable/tab_background_selector"
+                app:tabGravity="fill"
+                app:tabInlineLabel="false"
+                app:tabMode="fixed"
+                app:tabPadding="8dp"
+                app:tabRippleColor="@null"
+                app:tabSelectedTextColor="@color/black"
+                app:tabTextColor="@color/black"
+                app:tabIconTint="@color/black"
+                app:tabIndicatorHeight="0dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <!-- Navigation Drawer -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
