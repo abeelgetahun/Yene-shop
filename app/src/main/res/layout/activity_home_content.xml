@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_menu"
         android:background="@android:color/transparent"
-        android:padding="5dp"/>
+        />
 
     <ImageButton
         android:id="@+id/toolbar_shoplogo"
@@ -83,33 +83,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:tabGravity="fill">
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tablayout_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add" />
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tablayout_sale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sales" />
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tablayout_store"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Store" />
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tablayout_report"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Report" />
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            android:background="@color/black"
+            app:tabIconTint="@color/white"
+            app:tabTextColor="@color/white"
+            app:tabIndicatorColor="@color/btn_color"
+            app:tabInlineLabel="true">
+            <!-- Remove the TabItems here as they will be added programmatically -->
         </com.google.android.material.tabs.TabLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,8 +1,11 @@
 package com.teferi.abel.yeneshop;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +27,9 @@ import com.teferi.abel.yeneshop.Fragments.StoreFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private static final String PREFERENCES_FILE = "user_data";
+    TextView ownername, shopname;
+
     DrawerLayout drawerLayout;
     ImageButton menu_btn;
 
@@ -42,15 +48,55 @@ public class HomeActivity extends AppCompatActivity {
         tabLayout=findViewById(R.id.tablayout);
         viewPager=findViewById(R.id.viewpager);
 
+        // Load user data
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        String ownerName = sharedPreferences.getString("owner_name", "");
+        String shopName = sharedPreferences.getString("shop_name", "");
+
+        ownername=findViewById(R.id.textview_ownername);
+        shopname=findViewById(R.id.textview_shopname);
+        ownername.setText("Hello "+ownerName);
+        shopname.setText(shopName+" store");
+
+
         tabLayout.setupWithViewPager(viewPager);
 
-        FragmentAdapter fragmentAdapter=new FragmentAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        fragmentAdapter.addFragment(new AddFragment(),"Add");
-        fragmentAdapter.addFragment(new SaleFragment(),"Sale");
-        fragmentAdapter.addFragment(new StoreFragment(),"Store");
-        fragmentAdapter.addFragment(new ReportFragment(),"Report");
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+
+        // Add fragments with their respective icons
+        fragmentAdapter.addFragment(new AddFragment(), "Add", R.drawable.ic_add);
+        fragmentAdapter.addFragment(new SaleFragment(), "Sales", R.drawable.ic_sale);
+        fragmentAdapter.addFragment(new StoreFragment(), "Store", R.drawable.ic_store);
+        fragmentAdapter.addFragment(new ReportFragment(), "Report", R.drawable.ic_report);
 
         viewPager.setAdapter(fragmentAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+        // Set icons for tabs
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            if (tab != null) {
+                tab.setIcon(fragmentAdapter.getPageIcon(i));
+            }
+        }
+
+        // Optional: Customize tab appearance
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                // You can add custom behavior when a tab is selected
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // You can add custom behavior when a tab is unselected
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // You can add custom behavior when a tab is reselected
+            }
+        });
 
 
         menu_btn.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +106,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
+//        // Optional: Method to clear user data (for testing)
+//        private void clearUserData() {
+//            SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            editor.clear();
+//            editor.apply();
+//        }
 
     }
 }
