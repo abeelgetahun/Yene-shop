@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/background">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <Toolbar
-        android:layout_marginTop="20dp"
+        android:paddingTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/background">
 
     <ImageButton
-        android:paddingTop="20dp"
         android:id="@+id/menu_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,8 +21,95 @@
         android:background="@android:color/transparent"
         android:padding="5dp"/>
 
+    <ImageButton
+        android:id="@+id/toolbar_shoplogo"
+        android:layout_marginRight="20dp"
+        android:scaleType="fitXY"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+
+        android:src="@drawable/ic_app"
+        android:layout_gravity="end"
+        android:background="@android:color/transparent" />
+
     </Toolbar>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginTop="-1dp"
+        android:background="@drawable/background_shape">
+
+        <TextView
+            android:id="@+id/textview_shopname"
+            android:layout_width="115dp"
+            android:layout_height="20dp"
+            android:fontFamily="@font/arbutus"
+            android:text="Store name"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/owner_name_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.03" />
+
+        <TextView
+            android:id="@+id/textview_ownername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/arbutus"
+            android:text="owner name"
+            android:textSize="20dp"
+            android:textColor="@color/owner_name_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.158"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.185" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="0dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            app:tabGravity="fill"
+            app:layout_constraintBaseline_toBottomOf="parent"
+            tools:layout_editor_absoluteY="136dp">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tablayout_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tablayout_sale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sales" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tablayout_store"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Store" />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tablayout_report"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Report" />
+        </com.google.android.material.tabs.TabLayout>
 
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

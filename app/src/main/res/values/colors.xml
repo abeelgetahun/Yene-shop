@@ -14,4 +14,7 @@
 
     <!-- Coffee starting message color -->
     <color name="star_message_color">#6F4E37</color>
+
+    <!-- Coffee starting message color -->
+    <color name="owner_name_color">#212f3d</color>
 </resources>
