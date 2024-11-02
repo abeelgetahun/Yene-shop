@@ -86,7 +86,7 @@ public class HomeActivity extends AppCompatActivity {
             FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(),
                     FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
-            // Add fragments
+            // Keep original order
             fragmentAdapter.addFragment(new AddFragment(), "Add", R.drawable.ic_add);
             fragmentAdapter.addFragment(new SaleFragment(), "Sales", R.drawable.ic_sale);
             fragmentAdapter.addFragment(new StoreFragment(), "Store", R.drawable.ic_store);
@@ -137,11 +137,14 @@ public class HomeActivity extends AppCompatActivity {
                     ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tab.getLayoutParams();
                     params.rightMargin = (int) TypedValue.applyDimension(
                             TypedValue.COMPLEX_UNIT_DIP,
-                            16,  // Increased gap between tabs
+                            16,
                             getResources().getDisplayMetrics()
                     );
                 }
             });
+
+            // Select Sales tab (index 1) by default
+            viewPager.setCurrentItem(1);
 
         } catch (Exception e) {
             e.printStackTrace();

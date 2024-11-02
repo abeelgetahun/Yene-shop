@@ -2,8 +2,8 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_selected="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/background" />  <!-- Blue color when selected -->
-            <corners android:radius="40dp" />  <!-- Increased corner radius -->
+            <solid android:color="@color/btn_color" />  <!-- Blue color when selected -->
+            <corners android:radius="30dp" />  <!-- Increased corner radius -->
         </shape>
     </item>
     <item>

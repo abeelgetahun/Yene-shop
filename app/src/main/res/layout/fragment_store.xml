@@ -1,17 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_marginTop="10dp"
     tools:context=".Fragments.StoreFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/total_store_pp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total store PP"
+        android:layout_gravity="top|center"
+        android:textColor="#030081"
+        android:fontFamily="@font/black_ops_one"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/total_store_sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:text="Total store sp"
+        android:textColor="#030081"
+        android:fontFamily="@font/black_ops_one"
+        android:layout_marginTop="26dp"
+        android:textSize="14sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        android:text="Add store" />
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:backgroundTint="@color/white"/>
 
 </FrameLayout>
