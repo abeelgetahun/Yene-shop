@@ -105,6 +105,7 @@ public interface MainDao {
 
 
     //////////
+
     public static class ProfitReport {
         public double totalProfit;
         public double totalTaxAmount;
@@ -112,19 +113,22 @@ public interface MainDao {
     }
 
     @Query("SELECT " +
-            "SUM((selling_price - purchasing_price) * quantity) as totalProfit, " +
-            "SUM((selling_price * quantity * tax) / 100) as totalTaxAmount, " +
-            "SUM((selling_price - purchasing_price) * quantity - (selling_price * quantity * tax / 100)) as netProfit " +
+            "COALESCE(SUM((selling_price - purchasing_price) * quantity), 0) as totalProfit, " +
+            "COALESCE(SUM((selling_price * quantity * tax) / 100), 0) as totalTaxAmount, " +
+            "COALESCE(SUM((selling_price - purchasing_price) * quantity - (selling_price * quantity * tax / 100)), 0) as netProfit " +
             "FROM sales " +
-            "WHERE datetime(date) >= datetime('now', '-24 hours')")
-    ProfitReport getDailyProfit();
+            "WHERE date BETWEEN :startDate AND :endDate")
+    ProfitReport getDailyProfit(String startDate, String endDate);
 
     @Query("SELECT " +
-            "SUM((selling_price - purchasing_price) * quantity) as totalProfit, " +
-            "SUM((selling_price * quantity * tax) / 100) as totalTaxAmount, " +
-            "SUM((selling_price - purchasing_price) * quantity - (selling_price * quantity * tax / 100)) as netProfit " +
+            "COALESCE(SUM((selling_price - purchasing_price) * quantity), 0) as totalProfit, " +
+            "COALESCE(SUM((selling_price * quantity * tax) / 100), 0) as totalTaxAmount, " +
+            "COALESCE(SUM((selling_price - purchasing_price) * quantity - (selling_price * quantity * tax / 100)), 0) as netProfit " +
             "FROM sales " +
-            "WHERE datetime(date) >= datetime('now', '-30 days')")
-    ProfitReport getMonthlyProfit();
+            "WHERE date BETWEEN :startDate AND :endDate")
+    ProfitReport getMonthlyProfit(String startDate, String endDate);
+
+    @Query("SELECT * FROM sales ORDER BY date DESC")
+    List<Sales> getAllSales();
 
 }

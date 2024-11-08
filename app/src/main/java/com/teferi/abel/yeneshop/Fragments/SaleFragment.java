@@ -44,6 +44,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SaleFragment extends Fragment {
+
     // UI Components
     private EditText salesNameEdit, salesQuantityEdit, salesSpEdit;
     private TextView salesItemLeft;
@@ -63,7 +64,8 @@ public class SaleFragment extends Fragment {
 
     // Constants for styling
     private static final int INSUFFICIENT_COLOR = Color.RED;
-    private static int NORMAL_COLOR ;
+    private static int NORMAL_COLOR;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,7 +76,7 @@ public class SaleFragment extends Fragment {
         executorService = Executors.newSingleThreadExecutor();
         mainHandler = new Handler(Looper.getMainLooper());
 
-        NORMAL_COLOR= ContextCompat.getColor(requireContext(), R.color.btn_color);
+        NORMAL_COLOR = ContextCompat.getColor(requireContext(), R.color.btn_color);
 
         initViews(view);
         setupDatabase();
@@ -82,6 +84,20 @@ public class SaleFragment extends Fragment {
         setupQuantityValidation();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Refresh items list when returning to fragment
+        executorService.execute(() -> {
+            itemsList = mainDao.getAll();
+            mainHandler.post(() -> {
+                if (searchAdapter != null) {
+                    searchAdapter.setFullList(itemsList);
+                }
+            });
+        });
     }
 
     private void initViews(View view) {
@@ -94,15 +110,9 @@ public class SaleFragment extends Fragment {
         searchCardView = view.findViewById(R.id.search_card_view);
         searchRecyclerView = view.findViewById(R.id.search_recycler_view);
 
-          saleBtn.setEnabled(false);
+        saleBtn.setEnabled(false);
         setupSaleButton();
 
-        salesNameEdit.setOnClickListener(v -> {
-            if (searchCardView.getVisibility() != View.VISIBLE) {
-                showSearchCardWithAnimation();
-                showAllItems();
-            }
-        });
 
         salesNameEdit.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
@@ -124,14 +134,158 @@ public class SaleFragment extends Fragment {
                                 dest.toString().substring(dend);
                         int input = Integer.parseInt(newVal);
                         if (input >= 0) return null;
-                    } catch (NumberFormatException nfe) {}
+                    } catch (NumberFormatException nfe) {
+                    }
                     return "";
                 }
+        });
+
+
+        // Modify the salesNameEdit click listener
+        salesNameEdit.setOnClickListener(v -> {
+            if (searchCardView.getVisibility() != View.VISIBLE) {
+                showSearchCardWithAnimation();
+                showAllItems();
+            }
+        });
+        // Modify the focus change listener
+        salesNameEdit.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                showSearchCardWithAnimation();
+                String searchText = salesNameEdit.getText().toString().trim();
+                if (!searchText.isEmpty()) {
+                    executorService.execute(() -> filterItems(searchText));
+                } else {
+                    showAllItems();
+                }
+            }
         });
 
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         searchRecyclerView.setHasFixedSize(true);
     }
+
+    private void refreshSearchData() {
+        executorService.execute(() -> {
+            List<Items> freshItems = mainDao.getAll();
+            mainHandler.post(() -> {
+                itemsList = freshItems;
+                if (searchAdapter != null) {
+                    searchAdapter.setFullList(itemsList);
+                }
+            });
+        });
+    }
+
+    private void setupSearchFunctionality() {
+        searchAdapter = new SearchAdapter(new ArrayList<>(), item -> {
+            currentItem = item;
+            updateUIForSelectedItem(item);
+            hideSearchCardWithAnimation(() -> {
+                salesNameEdit.clearFocus();
+                salesQuantityEdit.requestFocus();
+                showKeyboard(salesQuantityEdit);
+            });
+        });
+
+        searchRecyclerView.setAdapter(searchAdapter);
+        refreshSearchData();
+
+        salesNameEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String searchText = s.toString().toLowerCase().trim();
+                if (searchCardView.getVisibility() != View.VISIBLE) {
+                    showSearchCardWithAnimation();
+                }
+                if (searchText.isEmpty()) {
+                    showAllItems();
+                } else {
+                    executorService.execute(() -> filterItems(searchText));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }
+
+    private void setupSaleButton() {
+        saleBtn.setOnClickListener(v -> {
+            if (currentItem == null) {
+                showToast("Please select an item first");
+                return;
+            }
+
+            String quantityStr = salesQuantityEdit.getText().toString();
+            String sellingPriceStr = salesSpEdit.getText().toString();
+
+            if (quantityStr.isEmpty()) {
+                showToast("Please enter quantity");
+                return;
+            }
+
+            if (sellingPriceStr.isEmpty()) {
+                showToast("Please enter selling price");
+                return;
+            }
+
+            int quantity = Integer.parseInt(quantityStr);
+            double sellingPrice = Double.parseDouble(sellingPriceStr);
+
+            if (quantity <= 0) {
+                showToast("Please enter a valid quantity");
+                return;
+            }
+
+            if (sellingPrice <= 0) {
+                showToast("Please enter a valid selling price");
+                return;
+            }
+
+            if (quantity > currentItem.getQuantity()) {
+                showToast("Insufficient quantity available");
+                return;
+            }
+
+            // Create sale record
+            Sales sale = new Sales();
+            sale.setItem_id(currentItem.getId());
+            sale.setName(currentItem.getName());
+            sale.setCategory(currentItem.getCategory());
+            sale.setQuantity(quantity);
+            sale.setPurchasing_price(currentItem.getPurchasing_price());
+            sale.setSelling_price(sellingPrice);
+            sale.setTax(currentItem.getTax());
+            sale.setDate(getCurrentDate());
+
+            // Process sale in background
+            executorService.execute(() -> {
+                mainDao.processSale(sale, currentItem.getId(), quantity);
+
+                // Update the current item's quantity in memory
+                currentItem.setQuantity(currentItem.getQuantity() - quantity);
+
+                // Refresh the items list
+                itemsList = mainDao.getAll();
+
+                mainHandler.post(() -> {
+                    // Update search adapter with fresh data
+                    if (searchAdapter != null) {
+                        searchAdapter.setFullList(itemsList);
+                    }
+                    showToast("Sale completed successfully");
+                    resetFields();
+                });
+            });
+        });
+    }
+
 
     private void setupQuantityValidation() {
         salesQuantityEdit.addTextChangedListener(new TextWatcher() {
@@ -201,37 +355,6 @@ public class SaleFragment extends Fragment {
         });
     }
 
-    private void setupSearchFunctionality() {
-        searchAdapter = new SearchAdapter(new ArrayList<>(), item -> {
-            currentItem = item;
-            updateUIForSelectedItem(item);
-            hideSearchCardWithAnimation(() -> {
-                salesNameEdit.clearFocus();
-                salesQuantityEdit.requestFocus();
-                showKeyboard(salesQuantityEdit);
-            });
-        });
-
-        searchRecyclerView.setAdapter(searchAdapter);
-
-        salesNameEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String searchText = s.toString().toLowerCase().trim();
-                if (searchText.isEmpty()) {
-                    showAllItems();
-                } else {
-                    executorService.execute(() -> filterItems(searchText));
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-    }
 
     private void updateUIForSelectedItem(Items item) {
         salesNameEdit.setText(item.getName());
@@ -279,12 +402,6 @@ public class SaleFragment extends Fragment {
         }
     }
 
-    private void hideKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
 
     private void showAllItems() {
         mainHandler.post(() -> {
@@ -325,73 +442,6 @@ public class SaleFragment extends Fragment {
         executorService.shutdown();
     }
 
-    private void setupSaleButton() {
-        saleBtn.setOnClickListener(v -> {
-            if (currentItem == null) {
-                showToast("Please select an item first");
-                return;
-            }
-
-            String quantityStr = salesQuantityEdit.getText().toString();
-            String sellingPriceStr = salesSpEdit.getText().toString();
-
-            if (quantityStr.isEmpty()) {
-                showToast("Please enter quantity");
-                return;
-            }
-
-            if (sellingPriceStr.isEmpty()) {
-                showToast("Please enter selling price");
-                return;
-            }
-
-            int quantity = Integer.parseInt(quantityStr);
-            double sellingPrice = Double.parseDouble(sellingPriceStr);
-
-            if (quantity <= 0) {
-                showToast("Please enter a valid quantity");
-                return;
-            }
-
-            if (sellingPrice <= 0) {
-                showToast("Please enter a valid selling price");
-                return;
-            }
-
-            if (quantity > currentItem.getQuantity()) {
-                showToast("Insufficient quantity available");
-                return;
-            }
-
-            // Create sale record
-            Sales sale = new Sales();
-            sale.setItem_id(currentItem.getId());
-            sale.setName(currentItem.getName());
-            sale.setCategory(currentItem.getCategory());
-            sale.setQuantity(quantity);                    // Using user input quantity
-            sale.setPurchasing_price(currentItem.getPurchasing_price());
-            sale.setSelling_price(sellingPrice);           // Using user input selling price
-            sale.setTax(currentItem.getTax());
-            sale.setDate(getCurrentDate());
-
-            // Process sale in background
-            executorService.execute(() -> {
-                mainDao.processSale(sale, currentItem.getId(), quantity);
-
-                // Update the current item's quantity in memory
-                currentItem.setQuantity(currentItem.getQuantity() - quantity);
-
-                // Refresh the items list
-                itemsList = mainDao.getAll();
-
-                mainHandler.post(() -> {
-                    showToast("Sale completed successfully");
-                    resetFields();
-                });
-            });
-        });
-    }
-
     private void resetFields() {
         salesNameEdit.setText("");
         salesQuantityEdit.setText("");
@@ -409,5 +459,21 @@ public class SaleFragment extends Fragment {
 
     private void showToast(String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    // Add new method to hide keyboard
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) requireContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Reset the search card visibility when leaving the fragment
+        if (searchCardView.getVisibility() == View.VISIBLE) {
+            hideSearchCardWithAnimation(null);
+        }
     }
 }

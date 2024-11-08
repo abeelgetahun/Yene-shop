@@ -7,24 +7,41 @@
     android:padding="16dp"
     tools:context=".Fragments.ReportFragment">
 
-    <TextView
+  <TextView
+      android:text="Daily Report"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      android:fontFamily="@font/black_ops_one"
+      android:textColor="@color/black"
+      android:textSize="20sp"
+      android:gravity="center"/>
+  <TextView
         android:id="@+id/daily_report"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
-        android:fontFamily="@font/black_ops_one"
+        android:fontFamily="@font/arbutus"
         android:textColor="#030081"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:gravity="center"/>
 
+  <TextView
+      android:text="Monthly Report"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/black_ops_one"
+      android:textColor="@color/black"
+      android:textSize="20sp"
+      android:gravity="center"/>
     <TextView
         android:id="@+id/monthly_report"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/black_ops_one"
+        android:fontFamily="@font/arbutus"
         android:textColor="#030081"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:gravity="center"/>
 
 </LinearLayout>
