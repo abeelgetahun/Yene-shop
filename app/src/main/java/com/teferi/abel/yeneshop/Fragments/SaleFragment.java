@@ -75,17 +75,14 @@ public class SaleFragment extends Fragment {
         // Initialize components
         executorService = Executors.newSingleThreadExecutor();
         mainHandler = new Handler(Looper.getMainLooper());
-
         NORMAL_COLOR = ContextCompat.getColor(requireContext(), R.color.btn_color);
 
         initViews(view);
         setupDatabase();
         setupSearchFunctionality();
         setupQuantityValidation();
-
         return view;
     }
-
     @Override
     public void onResume() {
         super.onResume();
