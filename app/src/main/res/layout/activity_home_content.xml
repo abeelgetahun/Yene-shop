@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -44,26 +45,35 @@
 
             <TextView
                 android:id="@+id/textview_shopname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
+                android:layout_width="102dp"
+                android:layout_height="13dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="12dp"
                 android:fontFamily="@font/arbutus"
+                android:gravity="end"
                 android:text="Store name"
                 android:textColor="@color/owner_name_color"
+                android:textSize="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textview_ownername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_width="277dp"
+                android:layout_height="26dp"
                 android:layout_marginTop="32dp"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:fontFamily="@font/arbutus"
+                android:gravity="center_horizontal"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:text="owner name"
-                android:textColor="@color/owner_name_color"
+                android:textColor="@color/white"
                 android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,50 +28,54 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        // Animation for app beginning
-        topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
-        bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
+        try {
+            // Animation for app beginning
+            topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
+            bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
 
-        // Hooks
-        image = findViewById(R.id.shoplogo);
-        logo = findViewById(R.id.firstlogname);
-        slogan = findViewById(R.id.firstmessage);
+            // Hooks
+            image = findViewById(R.id.shoplogo);
+            logo = findViewById(R.id.firstlogname);
+            slogan = findViewById(R.id.firstmessage);
 
-        // Set animations
-        image.setAnimation(topAnim);
-        logo.setAnimation(bottomAnim);
-        slogan.setAnimation(bottomAnim);
+            // Set animations
+            if (image != null) image.setAnimation(topAnim);
+            if (logo != null) logo.setAnimation(bottomAnim);
+            if (slogan != null) slogan.setAnimation(bottomAnim);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                checkUserLoginStatus();
-            }
-        }, SPLASH_DURATION);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    checkUserLoginStatus();
+                }
+            }, SPLASH_DURATION);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // If there's an error, proceed directly to checking login status
+            checkUserLoginStatus();
+        }
     }
 
     private void checkUserLoginStatus() {
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
-        String ownerName = sharedPreferences.getString("owner_name", null);
-        String shopName = sharedPreferences.getString("shop_name", null);
+        try {
+            SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+            String ownerName = sharedPreferences.getString("owner_name", null);
+            String shopName = sharedPreferences.getString("shop_name", null);
 
-        Intent intent;
-        if (ownerName != null && shopName != null) {
-            // User has already signed up, go to HomeAdd activity
-            intent = new Intent(MainActivity.this, HomeActivity.class);
-        } else {
-            // User hasn't signed up, go to Signup activity
-            intent = new Intent(MainActivity.this, Signup.class);
+            Intent intent;
+            if (ownerName != null && shopName != null) {
+                intent = new Intent(MainActivity.this, HomeActivity.class);
+            } else {
+                intent = new Intent(MainActivity.this, Signup.class);
+            }
+            startActivity(intent);
+            finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Please contact the developer, ", Toast.LENGTH_SHORT).show();
+            // Fallback to Signup activity if there's an error
         }
-        startActivity(intent);
-        finish();
     }
 }
