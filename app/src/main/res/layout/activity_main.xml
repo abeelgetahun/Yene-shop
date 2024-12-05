@@ -12,34 +12,34 @@
 
     <TextView
         android:id="@+id/firstlogname"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="272dp"
-        android:fontFamily="@font/logo_name_font"
-        android:text="Yene Shop"
-        android:textAlignment="center"
+        android:layout_marginBottom="280dp"
+        android:fontFamily="@font/chewy"
+        android:gravity="center_horizontal"
+        android:text="Yene Shop manager"
         android:textColor="@color/brand_name"
-        android:textSize="74sp"
+        android:textSize="65sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/firstmessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/cherry_cream_soda"
+        android:fontFamily="@font/logo_name_font"
         android:text="Advance Your Business!"
         android:textAlignment="viewEnd"
         android:textColor="@color/star_message_color"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.783"
+        app:layout_constraintHorizontal_bias="0.809"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/firstlogname"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.085" />
 
     <ImageView
         android:id="@+id/shoplogo"

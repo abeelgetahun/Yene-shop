@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Trial Period Expired"
+            android:fontFamily="@font/bakbak_one"
+            android:textColor="#FF0000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Your trial day period is expired. For more information please contact the developer through:"
+            android:fontFamily="@font/afacad"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:layout_marginBottom="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnPhone"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="5dp"
+                android:scaleType="fitXY"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_phone" />
+
+            <ImageButton
+                android:id="@+id/btnTelegram"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginVertical="10dp"
+                android:scaleType="fitXY"
+                android:padding="5dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_telegram" />
+
+
+            <ImageButton
+                android:id="@+id/btnEmail"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="5dp"
+                android:layout_marginLeft="5dp"
+                android:scaleType="fitXY"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_email" />
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

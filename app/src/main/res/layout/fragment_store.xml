@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
+
     android:layout_marginTop="10dp"
     tools:context=".Fragments.StoreFragment">
 

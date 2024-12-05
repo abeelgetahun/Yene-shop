@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
-        android:background="#fffff0"
+        android:background="@color/card_color"
         android:outlineAmbientShadowColor="@color/design_default_color_primary"
         android:orientation="vertical">
         <LinearLayout

@@ -8,14 +8,22 @@
   <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="About"
+      android:text="About YeneShop"
       android:textSize="24sp"
-      android:textStyle="bold" />
+      android:textStyle="bold"
+      android:layout_marginBottom="16dp"/>
 
   <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
-      android:text="Your about content goes here" />
+      android:text="YeneShop is your complete store management solution. Manage your inventory, track sales, and generate reports with ease."
+      android:textSize="16sp"
+      android:layout_marginBottom="16dp"/>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Version 1.0"
+      android:textSize="14sp"/>
 
 </LinearLayout>

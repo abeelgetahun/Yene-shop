@@ -23,7 +23,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_menu" />
+                android:src="@drawable/ic_menu"
+                app:tint="@color/white"/>
 
             <ImageButton
                 android:id="@+id/toolbar_shoplogo"
@@ -52,7 +53,7 @@
                 android:fontFamily="@font/arbutus"
                 android:gravity="end"
                 android:text="Store name"
-                android:textColor="@color/owner_name_color"
+                android:textColor="@color/card_color"
                 android:textSize="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

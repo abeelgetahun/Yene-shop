@@ -4,16 +4,19 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Golden background color -->
-    <color name="background">#D9B024</color>
+    <color name="background">#6F35A5</color>
 
     <!-- Oxblood brand name color -->
-    <color name="brand_name">#4A0404</color>
+    <color name="brand_name">#ffffff</color>
+
+    <!--card color -->
+    <color name="card_color">#f1dcff</color>
 
     <!-- Purple button color -->
-    <color name="btn_color">#6E260E</color>
+    <color name="btn_color">#FF6F35A5</color>
 
     <!-- Coffee starting message color -->
-    <color name="star_message_color">#6F4E37</color>
+    <color name="star_message_color">#FFF1E6FF</color>
 
     <!-- Coffee starting message color -->
     <color name="owner_name_color">#212f3d</color>

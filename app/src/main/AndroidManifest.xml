@@ -17,7 +17,12 @@
             android:exported="false" />
         <activity
             android:name=".Menus.AboutActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
         <activity
             android:name=".ItemUpdate"
             android:exported="false" />

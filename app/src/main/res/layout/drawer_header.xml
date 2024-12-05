@@ -31,26 +31,28 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center">
+
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="182dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="Yene Shop"
-
                 android:fontFamily="@font/logo_name_font"
+
+                android:text="Yene Shop"
                 android:textColor="@color/brand_name"
-                android:textSize="25sp"
+                android:textSize="32sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="187dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="Advance your business!"
-                android:gravity="end"
                 android:fontFamily="@font/bangers"
+                android:gravity="end"
+                android:textStyle="normal"
+                android:text="Advance your business!"
                 android:textColor="@color/star_message_color"
-                android:textSize="10sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
     </LinearLayout>
