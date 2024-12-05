@@ -1,6 +1,7 @@
 package com.teferi.abel.yeneshop;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -36,6 +37,7 @@ import com.teferi.abel.yeneshop.Fragments.AddFragment;
 import com.teferi.abel.yeneshop.Fragments.ReportFragment;
 import com.teferi.abel.yeneshop.Fragments.SaleFragment;
 import com.teferi.abel.yeneshop.Fragments.StoreFragment;
+import com.teferi.abel.yeneshop.Menus.HelpActivity;
 
 public class HomeActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -101,6 +103,8 @@ public class HomeActivity extends AppCompatActivity {
                     message = "Settings selected";
                 } else if (itemId == R.id.navHelp) {
                     message = "Help selected";
+                    Intent intent = new Intent(HomeActivity.this, HelpActivity.class);
+                    startActivity(intent);
                 } else if (itemId == R.id.navFeedback) {
                     message = "Feedback selected";
                 } else if (itemId == R.id.navAbout) {

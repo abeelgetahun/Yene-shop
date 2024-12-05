@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        hideSystemBars();
         setContentView(R.layout.activity_main);
 
         try {
@@ -70,6 +71,29 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void hideSystemBars() {
+        // Enable immersive sticky mode for full-screen experience
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
+        // Set system bar background colors to match the app's background
+        Window window = getWindow();
+        window.setStatusBarColor(getResources().getColor(R.color.background, getTheme())); // Status bar
+        window.setNavigationBarColor(getResources().getColor(R.color.background, getTheme())); // Navigation bar
+
+        // Ensure system bar content (icons/text) is invisible
+        window.getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR // Adjust for light/dark backgrounds if necessary
+                        | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR // Requires API level 26 or higher
+        );
+    }
+
+
 
     private boolean checkTrialPeriod() {
         SharedPreferences prefs = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
@@ -185,4 +209,6 @@ public class MainActivity extends AppCompatActivity {
 
         dialog.show();
     }
+
+
 }
