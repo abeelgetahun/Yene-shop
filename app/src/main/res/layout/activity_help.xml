@@ -5,18 +5,23 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-    android:background="@color/card_color"
+    android:background="@color/white"
 tools:context=".MainActivity">
 
 <!-- Back Button -->
-<com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/fab_help_back"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:src="@drawable/ic_back"
-    android:layout_gravity="start|top"
-    android:contentDescription="Back Button" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_help_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_back"
+        android:layout_gravity="start|top"
+        android:backgroundTint="@color/white"
+        android:background="@drawable/gradient_fab_background"
+        android:elevation="0dp"
+        android:contentDescription="Back Button"
+        app:tint="@color/black"/>
+
 
 <!-- Scrollable Content -->
 <androidx.core.widget.NestedScrollView
@@ -25,6 +30,8 @@ tools:context=".MainActivity">
     android:clipToPadding="false"
     android:fillViewport="true">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,15 +39,81 @@ tools:context=".MainActivity">
         android:paddingTop="80dp"
         android:paddingHorizontal="20dp">
 
-        <!-- Long story about Muhammad Ali -->
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="230dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/help_image" />
+
         <TextView
             android:id="@+id/tv_story"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textColor="@android:color/black"
             android:lineSpacingExtra="8dp"
-            android:text="                TEST       " />
+            android:paddingVertical="20dp"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:text="What Does Yene Shop Manager Do?" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yene Shop Manager is your all-in-one solution for managing your shop's inventory and sales. It helps you:
+
+Track which items are in stock and which are out.
+Monitor the exact quantities of each item in your store.
+Simplify selling items directly from your inventory.
+Automatically generate gross, net, and total sales reports, including daily and monthly summaries.
+Calculate taxes on your sales effortlessly.
+With Yene Shop Manager, running your store becomes smoother, smarter, and stress-free.
+
+"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:paddingVertical="20dp"
+            android:textStyle="bold"
+            android:text="How to Use "
+            android:textColor="@color/black"
+            android:gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="Adding Items to Your Inventory"
+            android:gravity="start"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="To add items:\n
+    - Go to the app's Home page and tap the &quot;ADD&quot; button.\n
+        - Enter the item's details, including:\n
+        • Item Name (e.g., &quot;Cocacola&quot;)\n
+        • Item Category (e.g., &quot;SOFT DRINK&quot;)\n
+        • Item Quantity (e.g., &quot;24&quot;)\n
+        • Item Purchasing price (e.g., &quot;50 Birr&quot;)\n
+        • Item Selling price (e.g., &quot;60 Birr&quot;)\n
+        • Item Tax (e.g. &quot;15%&quot;)\n
+        - Tap &quot;ADD&quot;, and the item will instantly be added to your inventory."
+        android:textSize="15sp"
+        android:padding="5dp"
+        android:background="#FFFFFF" />
+
 
 
 

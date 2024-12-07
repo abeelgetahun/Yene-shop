@@ -19,6 +19,9 @@
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/drawer_items"
         app:dividerInsetStart="80dp"
+        android:backgroundTint="@color/white"
+        app:itemTextColor="@color/black"
+        app:itemIconTint="@color/black"
         app:itemHorizontalPadding="20dp"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -1,0 +1,21 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Transparent Gradient Layer -->
+    <item>
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="@android:color/transparent"
+                android:endColor="@color/semi_black"
+                android:gradientRadius="40dp"
+                android:type="radial"
+                android:centerColor="@color/semi_gray" />
+        </shape>
+    </item>
+
+    <!-- Solid White Background Layer -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/white" />
+        </shape>
+    </item>
+</layer-list>

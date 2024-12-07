@@ -20,4 +20,10 @@
 
     <!-- Coffee starting message color -->
     <color name="owner_name_color">#212f3d</color>
+
+
+    <color name="semi_black">#FFFFFF</color>
+    <color name="semi_gray">#FFFFFF</color>
+
+
 </resources>
