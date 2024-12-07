@@ -37,6 +37,7 @@ import com.teferi.abel.yeneshop.Fragments.AddFragment;
 import com.teferi.abel.yeneshop.Fragments.ReportFragment;
 import com.teferi.abel.yeneshop.Fragments.SaleFragment;
 import com.teferi.abel.yeneshop.Fragments.StoreFragment;
+import com.teferi.abel.yeneshop.Menus.AboutActivity;
 import com.teferi.abel.yeneshop.Menus.HelpActivity;
 
 public class HomeActivity extends AppCompatActivity {
@@ -99,17 +100,14 @@ public class HomeActivity extends AppCompatActivity {
                 } else if (itemId == R.id.navSetting) {
                     message = "Settings selected";
                 } else if (itemId == R.id.navHelp) {
-                    message = "Help selected";
                     Intent intent = new Intent(HomeActivity.this, HelpActivity.class);
                     startActivity(intent);
                 } else if (itemId == R.id.navFeedback) {
                     message = "Feedback selected";
                 } else if (itemId == R.id.navAbout) {
-                    message = "About selected";
+                    Intent intent = new Intent(HomeActivity.this, AboutActivity.class);
+                    startActivity(intent);
                 }
-
-                // Show toast message
-                Toast.makeText(HomeActivity.this, message, Toast.LENGTH_SHORT).show();
 
                 // Close the drawer
                 drawerLayout.closeDrawer(GravityCompat.START);

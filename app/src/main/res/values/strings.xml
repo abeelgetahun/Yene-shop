@@ -47,4 +47,6 @@
     <string name="close">Close Navigation</string>
 
 
+    <string name="version_format">Version %s</string>
+
 </resources>
