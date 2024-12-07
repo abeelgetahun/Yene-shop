@@ -66,8 +66,8 @@ public class HelpActivity extends AppCompatActivity {
 
         // Set system bar background colors to match the app's background
         Window window = getWindow();
-        window.setStatusBarColor(getResources().getColor(R.color.card_color, getTheme())); // Status bar
-        window.setNavigationBarColor(getResources().getColor(R.color.card_color, getTheme())); // Navigation bar
+        window.setStatusBarColor(getResources().getColor(R.color.white, getTheme())); // Status bar
+        window.setNavigationBarColor(getResources().getColor(R.color.white, getTheme())); // Navigation bar
 
         // Ensure system bar content (icons/text) is invisible
         window.getDecorView().setSystemUiVisibility(

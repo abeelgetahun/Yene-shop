@@ -62,9 +62,6 @@ public class HomeActivity extends AppCompatActivity {
         setupNameScroll();
 
 
-
-
-
         // Set up navigation drawer header
         navigationView.inflateHeaderView(R.layout.drawer_header);
         // Set up navigation drawer menu
