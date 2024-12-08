@@ -49,4 +49,9 @@
 
     <string name="version_format">Version %s</string>
 
+    <string name="shop_name">Shop Name</string>
+    <string name="owner_name">Owner Name</string>
+    <string name="enter_shop_name">Enter shop name</string>
+    <string name="enter_owner_name">Enter owner name</string>
+
 </resources>
