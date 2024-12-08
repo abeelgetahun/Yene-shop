@@ -36,21 +36,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="80dp"
+        android:paddingTop="50dp"
         android:paddingHorizontal="20dp">
 
       <ImageView
-          android:id="@+id/imageView"
-          android:layout_width="230dp"
-          android:layout_height="250dp"
-          android:layout_gravity="center_horizontal"
-          android:scaleType="fitXY"
-          app:srcCompat="@drawable/about_image" />
+          android:id="@+id/gifImageView_about"
+          android:layout_width="match_parent"
+          android:layout_height="300dp"
+          android:layout_gravity="top" />
 
       <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="5dp"
+          android:layout_marginTop="20dp"
           android:fontFamily="@font/averia_libre_light"
           android:text="Yene shop manager"
           android:textColor="@color/black"

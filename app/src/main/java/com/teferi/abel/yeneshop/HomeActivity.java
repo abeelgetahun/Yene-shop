@@ -39,6 +39,7 @@ import com.teferi.abel.yeneshop.Fragments.SaleFragment;
 import com.teferi.abel.yeneshop.Fragments.StoreFragment;
 import com.teferi.abel.yeneshop.Menus.AboutActivity;
 import com.teferi.abel.yeneshop.Menus.HelpActivity;
+import com.teferi.abel.yeneshop.Menus.SettingActivity;
 
 public class HomeActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -98,7 +99,8 @@ public class HomeActivity extends AppCompatActivity {
                 } else if (itemId == R.id.navReport) {
                     message = "Report by category selected";
                 } else if (itemId == R.id.navSetting) {
-                    message = "Settings selected";
+                    Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
+                    startActivity(intent);
                 } else if (itemId == R.id.navHelp) {
                     Intent intent = new Intent(HomeActivity.this, HelpActivity.class);
                     startActivity(intent);

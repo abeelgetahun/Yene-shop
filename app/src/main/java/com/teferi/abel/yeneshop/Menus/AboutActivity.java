@@ -8,9 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.teferi.abel.yeneshop.R;
+
 
 public class AboutActivity extends AppCompatActivity {
     // Social media URLs
@@ -34,6 +35,15 @@ public class AboutActivity extends AppCompatActivity {
         setupWindow();
         setContentView(R.layout.activity_about);
         initializeViews();
+
+
+        ImageView imageView = findViewById(R.id.gifImageView_about);
+
+        // Load GIF from drawable folder
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.gif_about)
+                .into(imageView);
     }
 
     private void setupWindow() {
