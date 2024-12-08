@@ -58,5 +58,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
     implementation("androidx.compose.material:material-icons-extended-android:1.7.5")
 }
