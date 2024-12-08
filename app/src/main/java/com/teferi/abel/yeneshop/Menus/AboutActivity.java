@@ -27,7 +27,6 @@ public class AboutActivity extends AppCompatActivity {
         // Apply window configurations before setContentView
         setupWindow();
         setContentView(R.layout.activity_about);
-
         initializeViews();
     }
 
@@ -70,10 +69,10 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void setupSocialMediaButtons() {
-        setupSocialButton(R.id.btnlinkedin, "YOUR_LINKEDIN_URL");
-        setupSocialButton(R.id.btnintagram, "YOUR_INSTAGRAM_URL");
-        setupSocialButton(R.id.btnfacebook, "YOUR_FACEBOOK_URL");
-        setupSocialButton(R.id.btnx, "YOUR_X_URL");
+        setupSocialButton(R.id.btnlinkedin, "https://x.com/Ab_el__?t=Yt3BX66RsxietbVii9-eVA&s=35");
+        setupSocialButton(R.id.btnintagram, "https://www.instagram.com/abelu_23/");
+        setupSocialButton(R.id.btnfacebook, "https://www.facebook.com/abel.getahun.370");
+        setupSocialButton(R.id.btnx, "https://www.linkedin.com/in/abel-getahun-625060291?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app");
     }
 
     private void setupSocialButton(int buttonId, String url) {

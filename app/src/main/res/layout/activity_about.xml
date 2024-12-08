@@ -83,25 +83,25 @@
           android:textStyle="bold"
           android:textSize="18sp" />
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="center_horizontal"
-          android:background="#FFFFFF"
-          android:fontFamily="@font/averia_libre_light"
-          android:paddingStart="8dp"
-          android:paddingVertical="5dp"
-          android:text="Teferi Technology solution"
-          android:textColor="@color/black"
-          android:textSize="18sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:fontFamily="@font/averia_libre_light"
+            android:gravity="center_horizontal"
+            android:paddingVertical="5dp"
+            android:paddingStart="8dp"
+            android:text="Teferi Technology solution"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
       <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:gravity="center_horizontal"
           android:background="#FFFFFF"
-          android:fontFamily="@font/averia_libre_light"
-          android:paddingTop="20dp"
+          android:fontFamily="@font/margarine"
+          android:paddingTop="30dp"
           android:text="Follow me"
           android:textColor="@color/black"
           android:textStyle="bold"
@@ -131,14 +131,14 @@
               android:background="?attr/selectableItemBackgroundBorderless"
               android:src="@drawable/ic_linkedin" />
 
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="LinkedIn"
-              android:textSize="12sp"
-              android:textColor="@color/black"
-              android:fontFamily="@font/averia_libre_light"
-              android:layout_marginTop="4dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="LinkedIn"
+                android:fontFamily="@font/faster_one"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -161,9 +161,9 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Instagram"
-              android:textSize="12sp"
+              android:textSize="13sp"
               android:textColor="@color/black"
-              android:fontFamily="@font/averia_libre_light"
+              android:fontFamily="@font/faster_one"
               android:layout_marginTop="4dp"/>
         </LinearLayout>
 
@@ -187,9 +187,9 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Facebook"
-              android:textSize="12sp"
+              android:textSize="13sp"
               android:textColor="@color/black"
-              android:fontFamily="@font/averia_libre_light"
+              android:fontFamily="@font/faster_one"
               android:layout_marginTop="4dp"/>
         </LinearLayout>
 
@@ -213,9 +213,9 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="X"
-              android:textSize="12sp"
+              android:textSize="13sp"
               android:textColor="@color/black"
-              android:fontFamily="@font/averia_libre_light"
+              android:fontFamily="@font/faster_one"
               android:layout_marginTop="4dp"/>
         </LinearLayout>
 
