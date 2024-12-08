@@ -9,18 +9,22 @@
 
     android:layout_marginTop="10dp"
     tools:context=".Fragments.StoreFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Store"
-        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
         android:layout_gravity="top|center"
         android:textColor="@color/black"
-        android:fontFamily="@font/black_ops_one"
+        android:fontFamily="@font/arbutus"
         android:textSize="20sp"/>
     <TextView
-        android:layout_marginTop="35dp"
         android:id="@+id/total_store_pp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,19 +40,21 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
         android:text="Total store sp"
+        android:layout_margin="10dp"
         android:textColor="#030081"
         android:fontFamily="@font/arbutus"
-        android:layout_marginTop="50dp"
         android:textSize="12sp" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="70dp"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:backgroundTint="@color/white"/>
 
+
+    </LinearLayout>
 </FrameLayout>

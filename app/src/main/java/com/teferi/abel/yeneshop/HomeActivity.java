@@ -1,5 +1,6 @@
 package com.teferi.abel.yeneshop;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -101,14 +102,21 @@ public class HomeActivity extends AppCompatActivity {
                 } else if (itemId == R.id.navSetting) {
                     Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
                     startActivity(intent);
+                    return true;
                 } else if (itemId == R.id.navHelp) {
                     Intent intent = new Intent(HomeActivity.this, HelpActivity.class);
                     startActivity(intent);
+                    return true;
                 } else if (itemId == R.id.navFeedback) {
                     message = "Feedback selected";
                 } else if (itemId == R.id.navAbout) {
                     Intent intent = new Intent(HomeActivity.this, AboutActivity.class);
-                    startActivity(intent);
+
+                    // Enable activity transitions
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this);
+
+                    startActivity(intent, options.toBundle());
+                    return true;
                 }
 
                 // Close the drawer
