@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    android:background="@color/white"
+    tools:context=".Menus.FeedbackActivity">
+
+    <!-- Back Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_about_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_back"
+        android:layout_gravity="start|top"
+        android:backgroundTint="@color/white"
+        android:background="@drawable/gradient_fab_background"
+        android:elevation="0dp"
+        android:contentDescription="Back Button"
+        app:tint="@color/black"/>
+
+
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="50dp"
+            android:paddingHorizontal="20dp">
+
+            <ImageView
+                android:id="@+id/animatedEmailIcon"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/animated_email_verified_icon"
+                android:contentDescription="Animated email verification icon"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:fontFamily="@font/averia_libre_light"
+                android:gravity="center_horizontal"
+                android:paddingVertical="20dp"
+                android:lineSpacingExtra="4dp"
+                android:paddingStart="8dp"
+                android:text="Have feedback, a suggestion, or a problem? Need assistance or want to collaborate on a project? Reach out to me—I'm here to help!"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:background="#FFFFFF"
+                android:fontFamily="@font/margarine"
+                android:paddingTop="30dp"
+                android:text="contact me!"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="22sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnLinkedIn_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:drawableTop="@drawable/ic_linkedin_black"
+                    android:drawablePadding="4dp"
+                    android:text="LinkedIn"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/faster_one"
+                    android:textColor="@color/black"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="5dp" />
+
+                <Button
+                    android:id="@+id/btnPhoneSetting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:drawableTop="@drawable/ic_phone_black"
+                    android:drawablePadding="4dp"
+                    android:text="Phone no."
+                    android:textSize="13sp"
+                    android:fontFamily="@font/faster_one"
+                    android:textColor="@color/black"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="5dp" />
+
+                <Button
+                    android:id="@+id/btnTelegramSetting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:drawableTop="@drawable/ic_telegram_black"
+                    android:drawablePadding="4dp"
+                    android:text="Telegram"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/faster_one"
+                    android:textColor="@color/black"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="5dp" />
+
+                <Button
+                    android:id="@+id/btnEmailSetting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:drawableTop="@drawable/ic_email_black"
+                    android:drawablePadding="4dp"
+                    android:text="Email"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/faster_one"
+                    android:textColor="@color/black"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="5dp" />
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

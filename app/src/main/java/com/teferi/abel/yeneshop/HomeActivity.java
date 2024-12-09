@@ -39,7 +39,10 @@ import com.teferi.abel.yeneshop.Fragments.ReportFragment;
 import com.teferi.abel.yeneshop.Fragments.SaleFragment;
 import com.teferi.abel.yeneshop.Fragments.StoreFragment;
 import com.teferi.abel.yeneshop.Menus.AboutActivity;
+import com.teferi.abel.yeneshop.Menus.AllItemsActivity;
+import com.teferi.abel.yeneshop.Menus.FeedbackActivity;
 import com.teferi.abel.yeneshop.Menus.HelpActivity;
+import com.teferi.abel.yeneshop.Menus.ReportByCategory;
 import com.teferi.abel.yeneshop.Menus.SettingActivity;
 
 public class HomeActivity extends AppCompatActivity {
@@ -96,32 +99,28 @@ public class HomeActivity extends AppCompatActivity {
                 String message = "";
 
                 if (itemId == R.id.navAllItems) {
-                    message = "All Items selected";
+                    Intent intent = new Intent(HomeActivity.this, AllItemsActivity.class);
+                    startActivity(intent);
                 } else if (itemId == R.id.navReport) {
-                    message = "Report by category selected";
+                    Intent intent = new Intent(HomeActivity.this, ReportByCategory.class);
+                    startActivity(intent);
                 } else if (itemId == R.id.navSetting) {
                     Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
                     startActivity(intent);
-                    return true;
                 } else if (itemId == R.id.navHelp) {
                     Intent intent = new Intent(HomeActivity.this, HelpActivity.class);
                     startActivity(intent);
-                    return true;
                 } else if (itemId == R.id.navFeedback) {
-                    message = "Feedback selected";
+                    Intent intent = new Intent(HomeActivity.this, FeedbackActivity.class);
+                    startActivity(intent);
                 } else if (itemId == R.id.navAbout) {
                     Intent intent = new Intent(HomeActivity.this, AboutActivity.class);
-
                     // Enable activity transitions
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this);
-
                     startActivity(intent, options.toBundle());
-                    return true;
                 }
-
                 // Close the drawer
                 drawerLayout.closeDrawer(GravityCompat.START);
-
                 return true;
             }
         });
