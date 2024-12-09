@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/main"
     android:background="@color/white"
+    android:paddingVertical="8dp"
     tools:context=".Menus.FeedbackActivity">
 
     <!-- Back Button -->
@@ -44,8 +45,9 @@
                 android:id="@+id/animatedEmailIcon"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:layout_marginVertical="20dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/animated_email_verified_icon"
+                android:src="@drawable/email_verified_icon"
                 android:contentDescription="Animated email verification icon"/>
 
 
