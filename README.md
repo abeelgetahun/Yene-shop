@@ -35,6 +35,9 @@ abeelgetahun-yene-shop/
 │   │   ├── androidTest/            # Instrumented tests
 │   │   └── test/                   # Unit tests
 └── gradle/                         # Gradle wrapper and library versions
+
+For a detailed breakdown of the project directory structure, [**View Details**](https://github.com/abeelgetahun/Yene-shop/blob/master/DIRECTORY-README.md).
+
 ```
 
 ---
