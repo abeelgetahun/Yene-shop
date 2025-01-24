@@ -1,7 +1,4 @@
-
 # ✨ Yene Shop Manager ✨
-
----
 
 ## 📂 Directory Structure
 
@@ -73,3 +70,5 @@ abeelgetahun-yene-shop/
     ├── libs.versions.toml           # Dependency version management
     └── wrapper/
         └── gradle-wrapper.properties # Gradle wrapper configuration
+```
+
