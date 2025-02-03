@@ -126,7 +126,7 @@ Contributions are welcome! Follow these steps to contribute:
 
 ## 📧 Contact
 
-For any inquiries or support, please reach out to:
+For any inquiries or support, please reach out.
 
 ---
 
