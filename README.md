@@ -130,8 +130,4 @@ For any inquiries or support, please reach out to:
 
 ---
 
-## 🙌 Acknowledgments
-
-- Icons and images from [Material Design Icons](https://material.io/icons).
-- Fonts from [Google Fonts](https://fonts.google.com).
 
