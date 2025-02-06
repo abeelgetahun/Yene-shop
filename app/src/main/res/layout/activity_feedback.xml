@@ -98,6 +98,8 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:padding="5dp" />
 
+                <!--
+                phone button
                 <Button
                     android:id="@+id/btnPhoneSetting"
                     android:layout_width="wrap_content"
@@ -112,6 +114,7 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:padding="5dp" />
 
+                -->
                 <Button
                     android:id="@+id/btnTelegramSetting"
                     android:layout_width="wrap_content"

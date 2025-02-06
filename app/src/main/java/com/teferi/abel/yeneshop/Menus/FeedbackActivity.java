@@ -27,19 +27,19 @@ public class FeedbackActivity extends AppCompatActivity {
         setupWindow();
         setContentView(R.layout.activity_feedback);
 
-        // Initialize buttons
-        FloatingActionButton fabBack = findViewById(R.id.fab_about_back);
-        Button btnLinkedIn = findViewById(R.id.btnLinkedIn_setting);
-        Button btnPhone = findViewById(R.id.btnPhoneSetting);
-        Button btnTelegram = findViewById(R.id.btnTelegramSetting);
-        Button btnEmail = findViewById(R.id.btnEmailSetting);
-
-        // Set click listeners
-        fabBack.setOnClickListener(v -> finish());
-        btnLinkedIn.setOnClickListener(v -> openLinkedIn());
-        btnPhone.setOnClickListener(v -> makePhoneCall());
-        btnTelegram.setOnClickListener(v -> openTelegram());
-        btnEmail.setOnClickListener(v -> sendEmail());
+//        // Initialize buttons
+//        FloatingActionButton fabBack = findViewById(R.id.fab_about_back);
+//        Button btnLinkedIn = findViewById(R.id.btnLinkedIn_setting);
+//        //Button btnPhone = findViewById(R.id.btnPhoneSetting);
+//        Button btnTelegram = findViewById(R.id.btnTelegramSetting);
+//        Button btnEmail = findViewById(R.id.btnEmailSetting);
+//
+//        // Set click listeners
+//        fabBack.setOnClickListener(v -> finish());
+//        btnLinkedIn.setOnClickListener(v -> openLinkedIn());
+//       // btnPhone.setOnClickListener(v -> makePhoneCall());
+//        btnTelegram.setOnClickListener(v -> openTelegram());
+//        btnEmail.setOnClickListener(v -> sendEmail());
     }
 
     private void setupWindow() {

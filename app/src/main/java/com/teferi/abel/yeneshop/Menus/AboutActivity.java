@@ -65,7 +65,7 @@ public class AboutActivity extends AppCompatActivity {
         }
 
         setAppVersion();
-        setupSocialMediaButtons();
+//        setupSocialMediaButtons();
     }
 
     private void setAppVersion() {
