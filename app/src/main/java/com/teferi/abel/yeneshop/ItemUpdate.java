@@ -186,7 +186,7 @@ public class ItemUpdate extends AppCompatActivity {
             String category = categoryBuilder.toString();
 
             String name = updateName.getText().toString().trim();
-            int quantity = Integer.parseInt(updateQuantity.getText().toString().trim());
+            double quantity = Double.parseDouble(updateQuantity.getText().toString().trim());
             double purchasingPrice = Double.parseDouble(updatePP.getText().toString().trim());
             double sellingPrice = Double.parseDouble(updateSS.getText().toString().trim());
             int tax = Integer.parseInt(updateTax.getText().toString().trim());

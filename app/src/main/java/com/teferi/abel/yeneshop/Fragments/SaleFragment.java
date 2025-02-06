@@ -23,7 +23,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -129,7 +128,7 @@ public class SaleFragment extends Fragment {
                         String newVal = dest.toString().substring(0, dstart) +
                                 source.toString().substring(start, end) +
                                 dest.toString().substring(dend);
-                        int input = Integer.parseInt(newVal);
+                        double input = Double.parseDouble(newVal);
                         if (input >= 0) return null;
                     } catch (NumberFormatException nfe) {
                     }
@@ -232,7 +231,7 @@ public class SaleFragment extends Fragment {
                 return;
             }
 
-            int quantity = Integer.parseInt(quantityStr);
+            double quantity = Double.parseDouble(quantityStr);
             double sellingPrice = Double.parseDouble(sellingPriceStr);
 
             if (quantity <= 0) {
@@ -303,8 +302,8 @@ public class SaleFragment extends Fragment {
         if (currentItem == null) return;
 
         try {
-            int enteredQuantity = quantityStr.isEmpty() ? 0 : Integer.parseInt(quantityStr);
-            int remainingQuantity = currentItem.getQuantity() - enteredQuantity;
+            double enteredQuantity = quantityStr.isEmpty() ? 0 : Double.parseDouble(quantityStr); // Changed to double
+            double remainingQuantity = currentItem.getQuantity() - enteredQuantity; //currentItem.getQuantity() should be double
 
             if (remainingQuantity >= 0) {
                 updateUIForValidQuantity(remainingQuantity);
@@ -316,7 +315,7 @@ public class SaleFragment extends Fragment {
         }
     }
 
-    private void updateUIForValidQuantity(int remainingQuantity) {
+    private void updateUIForValidQuantity(double remainingQuantity) {
         salesItemLeft.setTextColor(Color.BLACK);
         salesItemLeft.setText("Left items: " + remainingQuantity);
         saleBtn.setEnabled(true);

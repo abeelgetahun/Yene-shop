@@ -113,10 +113,10 @@ public class AddFragment extends Fragment {
         }
 
         // Quantity validation
-        int quantity = 0;
+        double quantity = 0;
         try {
             if (!add_quantity.getText().toString().isEmpty()) {
-                quantity = Integer.parseInt(add_quantity.getText().toString().trim());
+                quantity = Double.parseDouble(add_quantity.getText().toString().trim());
             }
         } catch (NumberFormatException e) {
             setErrorStyle(add_quantity, "Invalid number format");

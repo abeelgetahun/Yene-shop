@@ -93,7 +93,7 @@
                 android:id="@+id/item_quantity_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:backgroundTint="@color/black"
                 android:textColor="@color/black" />
 
@@ -156,7 +156,7 @@
                 android:id="@+id/item_tax_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:backgroundTint="@color/black"
                 android:textColor="@color/black" />
 

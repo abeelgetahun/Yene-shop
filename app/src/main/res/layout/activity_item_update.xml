@@ -159,7 +159,7 @@
                     android:id="@+id/update_quantity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:alpha="0.7"
                     android:backgroundTint="@color/black"
                     android:textColor="@color/black" />

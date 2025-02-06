@@ -17,7 +17,7 @@ public class Items implements Serializable {
     String category;
 
     @ColumnInfo(name = "quantity")
-    int quantity;
+    double quantity;
 
     @ColumnInfo(name = "purchasing_price")
     Double Purchasing_price;
@@ -56,11 +56,11 @@ public class Items implements Serializable {
         this.category = category;  // Added 'this' keyword
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 

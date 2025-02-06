@@ -25,7 +25,8 @@ public interface MainDao {
     void update(Items item); // Add this method
 
     @Query("UPDATE items SET name=:name, Category=:Category,quantity=:quantity,purchasing_price=:purchasing_price,selling_price=:selling_price,tax=:tax WHERE id=:id")
-    void updateItem(int id,String name,String Category,int quantity,double purchasing_price,double selling_price,int tax);
+    // #qty change
+    void updateItem(int id,String name,String Category,double quantity,double purchasing_price,double selling_price,int tax);
 
     @Delete
     void delete(Items items);
@@ -36,7 +37,7 @@ public interface MainDao {
     public static class OverallTotals {
         public double totalSellingPrice;
         public double totalPurchasePrice;
-        public int totalQuantity;
+        public double totalQuantity;
     }
 
     @Query("SELECT " +
@@ -54,7 +55,8 @@ public interface MainDao {
         public String category;
         public double totalSellingPrice;
         public double totalPurchasePrice;
-        public int totalQuantity;
+        // #qty change2
+        public double totalQuantity;
 
     }
 
@@ -72,7 +74,8 @@ public interface MainDao {
     public static class ItemDetails {
         public int id;
         public String name;
-        public int quantity;
+        // #qty change3
+        public double quantity;
         public String category;
         public double purchasing_price;    // single item PP
         public double selling_price;       // single item SP
@@ -95,10 +98,10 @@ public interface MainDao {
     void insertSale(Sales sale);
 
     @Query("UPDATE items SET quantity = quantity - :soldQuantity WHERE id = :itemId")
-    void updateItemQuantityAfterSale(int itemId, int soldQuantity);
+    void updateItemQuantityAfterSale(int itemId, double soldQuantity);
 
     @Transaction
-    default void processSale(Sales sale, int itemId, int soldQuantity) {
+    default void processSale(Sales sale, int itemId, double soldQuantity) {
         insertSale(sale);
         updateItemQuantityAfterSale(itemId, soldQuantity);
     }
