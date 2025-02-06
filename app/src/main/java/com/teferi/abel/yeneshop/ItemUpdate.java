@@ -1,15 +1,21 @@
 package com.teferi.abel.yeneshop;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -225,13 +231,43 @@ public class ItemUpdate extends AppCompatActivity {
             return;
         }
 
-        Executors.newSingleThreadExecutor().execute(() -> {
-            mainDao.delete(currentItem);
-            runOnUiThread(() -> {
-                Toast.makeText(this, "Item deleted successfully", Toast.LENGTH_SHORT).show();
-                setResult(RESULT_OK);
-                finish();
+        // Create a custom dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_delete_layout);
+
+        // Make dialog background transparent and round corners
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        }
+
+        // Initialize views
+        ImageView deleteIcon = dialog.findViewById(R.id.deleteIcon);
+        TextView titleText = dialog.findViewById(R.id.titleText);
+        TextView messageText = dialog.findViewById(R.id.messageText);
+        Button cancelButton = dialog.findViewById(R.id.cancelButton);
+        Button confirmButton = dialog.findViewById(R.id.confirmButton);
+
+        // Set click listeners
+
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
+
+        confirmButton.setOnClickListener(v -> {
+            Executors.newSingleThreadExecutor().execute(() -> {
+                mainDao.delete(currentItem);
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "Item deleted successfully", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK);
+                    finish();
+                });
             });
+            dialog.dismiss();
         });
+
+        dialog.show();
     }
 }
