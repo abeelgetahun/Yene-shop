@@ -1,9 +1,8 @@
 package com.teferi.abel.yeneshop.Menus;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -30,11 +29,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import android.os.Handler;
 
 public class ReportByCategory extends AppCompatActivity {
     private RoomDB database;
     private static final int REQUEST_CODE_SAVE = 2;
     private int quantityThreshold = 0; // User-defined quantity for export
+    private ProgressDialog progressDialog; // For animation effect
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +63,10 @@ public class ReportByCategory extends AppCompatActivity {
         builder.setItems(options, (dialog, which) -> {
             switch (which) {
                 case 0:
-                    exportToCSV(database.mainDao().getItemsWithQuantityGreaterThan(0), "All_Items");
+                    exportWithAnimation(database.mainDao().getItemsWithQuantityGreaterThan(0), "All_Items");
                     break;
                 case 1:
-                    exportToCSV(database.mainDao().getSoldOutItems(), "Sold_Out_Items");
+                    exportWithAnimation(database.mainDao().getSoldOutItems(), "Sold_Out_Items");
                     break;
                 case 2:
                     showQuantityInputDialog();
@@ -91,7 +92,7 @@ public class ReportByCategory extends AppCompatActivity {
             String inputValue = input.getText().toString();
             if (!inputValue.isEmpty()) {
                 quantityThreshold = Integer.parseInt(inputValue);
-                exportToCSV(database.mainDao().getItemsWithQuantityGreaterThan(quantityThreshold), "Items_Above_" + quantityThreshold);
+                exportWithAnimation(database.mainDao().getItemsWithQuantityGreaterThan(quantityThreshold), "Items_Above_" + quantityThreshold);
             } else {
                 Toast.makeText(this, "Please enter a valid number!", Toast.LENGTH_SHORT).show();
             }
@@ -103,14 +104,32 @@ public class ReportByCategory extends AppCompatActivity {
     }
 
     /**
-     * Export selected items to CSV file
+     * Export selected items with an animation effect
      */
-    private void exportToCSV(List<Items> itemsList, String filePrefix) {
+    private void exportWithAnimation(List<Items> itemsList, String filePrefix) {
         if (itemsList.isEmpty()) {
             Toast.makeText(this, "No data to export", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // Show progress dialog with animation
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Exporting data... Please wait.");
+        progressDialog.setCancelable(false); // Prevent user interaction
+        progressDialog.show();
+
+        // Set minimum delay (5 seconds) before proceeding with the export
+        new Handler().postDelayed(() -> {
+            exportToCSV(itemsList, filePrefix);
+            progressDialog.dismiss();
+            Toast.makeText(this, "Export completed successfully!", Toast.LENGTH_LONG).show();
+        }, 3000); // 5 seconds delay
+    }
+
+    /**
+     * Export selected items to CSV file
+     */
+    private void exportToCSV(List<Items> itemsList, String filePrefix) {
         String fileName = filePrefix + "_" +
                 new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()) + ".csv";
 
@@ -158,7 +177,7 @@ public class ReportByCategory extends AppCompatActivity {
                     writeCSV(outputStream, database.mainDao().getAll());
                     Toast.makeText(this, "File saved successfully!", Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
-                    Toast.makeText(this, "Error saving file: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Error saving file", Toast.LENGTH_LONG).show();
                 }
             }
         }
