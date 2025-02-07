@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     android:padding="15dp"
     tools:context=".Menus.ReportByCategory">
@@ -20,6 +21,20 @@
         android:focusable="true"
         tools:ignore="MissingConstraints" />
 
+
+    <Button
+        android:id="@+id/export_test"
+        android:layout_width="91dp"
+        android:layout_height="39dp"
+        android:layout_marginBottom="52dp"
+        android:backgroundTint="@color/brand_name"
+        android:gravity="center"
+        android:text="export"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView"

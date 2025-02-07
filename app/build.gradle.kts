@@ -33,35 +33,27 @@ android {
 }
 
 dependencies {
-    implementation("com.google.android.material:material:1.10.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation(libs.material)  // Keep only one version
+    implementation(libs.constraintlayout)
+    implementation(libs.appcompat)
 
-    implementation ("androidx.appcompat:appcompat:1.6.1")
-    implementation ("com.google.android.material:material:1.9.0")
-
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("androidx.room:room-runtime:2.6.1")
     implementation(libs.recyclerview)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
-    annotationProcessor("androidx.room:room-compiler:2.6.1")
-    implementation ("androidx.cardview:cardview:1.0.0")
+    implementation(libs.room.common)
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
 
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.activity)
-    implementation(libs.constraintlayout)
-    implementation(libs.annotation)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.activity)
+    implementation(libs.annotation)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
-
-
-    implementation("androidx.compose.material:material-icons-extended-android:1.7.5")
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
 }
+
