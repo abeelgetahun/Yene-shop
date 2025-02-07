@@ -9,6 +9,7 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
+lottieVersion = "6.0.0"
 material = "1.12.0"
 activity = "1.9.1"
 constraintlayout = "2.1.4"
@@ -25,6 +26,7 @@ roomRuntime = "2.6.1"
 roomCommon = "2.6.1"
 
 [libraries]
+android-lottie = { module = "com.airbnb.android:lottie", version.ref = "lottieVersion" }
 appcompat-v161 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }

@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.teferi.abel.yeneshop.Database.RoomDB;
 import com.teferi.abel.yeneshop.Models.Items;
 import com.teferi.abel.yeneshop.R;
+import com.airbnb.lottie.LottieAnimationView;
 
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -112,19 +113,21 @@ public class ReportByCategory extends AppCompatActivity {
             return;
         }
 
-        // Show progress dialog with animation
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Exporting data... Please wait.");
-        progressDialog.setCancelable(false); // Prevent user interaction
-        progressDialog.show();
+        // Show Animation View
+        LottieAnimationView animationView = findViewById(R.id.export_animation);
+        animationView.setVisibility(View.VISIBLE);
+        animationView.playAnimation();
 
-        // Set minimum delay (5 seconds) before proceeding with the export
         new Handler().postDelayed(() -> {
             exportToCSV(itemsList, filePrefix);
-            progressDialog.dismiss();
+
+            // Hide animation after export completes
+            animationView.pauseAnimation();
+            animationView.setVisibility(View.GONE);
             Toast.makeText(this, "Export completed successfully!", Toast.LENGTH_LONG).show();
-        }, 3000); // 5 seconds delay
+        }, 5000); // 5 seconds delay
     }
+
 
     /**
      * Export selected items to CSV file
