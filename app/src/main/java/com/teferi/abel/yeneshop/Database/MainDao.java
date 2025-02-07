@@ -134,4 +134,15 @@ public interface MainDao {
     @Query("SELECT * FROM sales ORDER BY date DESC")
     List<Sales> getAllSales();
 
+
+    // export settings
+
+    @Query("SELECT * FROM Items WHERE quantity >= :minQty")
+    List<Items> getItemsWithQuantityGreaterThan(double minQty);
+
+    @Query("SELECT * FROM Items WHERE quantity = 0")
+    List<Items> getSoldOutItems(); // ✅ Fix: No parameter
+
+
+
 }
