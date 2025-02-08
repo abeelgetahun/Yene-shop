@@ -63,6 +63,7 @@ public class SalesExport {
                     return database.mainDao().getAllSales();
                 case "CUSTOM_DATE":
                     return database.mainDao().getSalesByDateRange(startDate, endDate);
+
                 default:
                     return database.mainDao().getAllSales();
             }

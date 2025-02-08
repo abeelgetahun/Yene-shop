@@ -222,14 +222,16 @@ public class ReportByCategory extends AppCompatActivity {
     /**
      * Shows a date picker dialog. For custom export, exports data from the selected start date up to now.
      */
+
     private void showDatePicker() {
         final Calendar calendar = Calendar.getInstance();
         DatePickerDialog datePicker = new DatePickerDialog(this,
                 (view, year, month, dayOfMonth) -> {
-                    // Format selected date as yyyy-MM-dd
+                    // Format the selected date as yyyy-MM-dd
                     String selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, dayOfMonth);
-                    // Use current date as end date
+                    // Get the current date in the same format
                     String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                    // Export all sales from the selected date up to now
                     exportSalesWithAnimation("CUSTOM_DATE", selectedDate, currentDate);
                 },
                 calendar.get(Calendar.YEAR),
@@ -237,6 +239,7 @@ public class ReportByCategory extends AppCompatActivity {
                 calendar.get(Calendar.DAY_OF_MONTH));
         datePicker.show();
     }
+
 
     /**
      * Exports sales data with a 5-second animation delay.
