@@ -1,20 +1,23 @@
 package com.teferi.abel.yeneshop.Fragments;
 
+import android.app.AlertDialog;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 import android.widget.TextView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.teferi.abel.yeneshop.Adapter.SoldItemsAdapter;
 import com.teferi.abel.yeneshop.Database.MainDao;
 import com.teferi.abel.yeneshop.Database.RoomDB;
+import com.teferi.abel.yeneshop.Models.Items;
 import com.teferi.abel.yeneshop.Models.Sales;
 import com.teferi.abel.yeneshop.R;
 import java.text.ParseException;
@@ -36,8 +39,6 @@ public class ReportFragment extends Fragment {
     private RecyclerView soldItemsRecyclerView;
     private SoldItemsAdapter soldItemsAdapter;
     private Button dailyButton, monthlyButton;
-
-    // New field to keep track of the currently selected report type
     private boolean isDailySelected = true;
 
     @Override
@@ -48,9 +49,9 @@ public class ReportFragment extends Fragment {
         initializeDatabase();
         setupRecyclerView();
         setupButtonListeners();
-        setDefaultButtonState();  // Set Daily as default active button
-        updateProfitReports();    // Load profit reports
-        updateSoldItemsReport(isDailySelected); // Load the sales list based on default selection
+        setDefaultButtonState();
+        updateProfitReports();
+        updateSoldItemsReport(isDailySelected);
         return view;
     }
 
@@ -72,37 +73,43 @@ public class ReportFragment extends Fragment {
         soldItemsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         soldItemsAdapter = new SoldItemsAdapter();
         soldItemsRecyclerView.setAdapter(soldItemsAdapter);
+        // Set the click listener for reversal functionality
+        soldItemsAdapter.setOnItemClickListener(sale -> {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Reverse Sale")
+                    .setMessage("Are you sure you want to reverse this sale?")
+                    .setPositiveButton("Yes", (dialog, which) -> reverseSale(sale))
+                    .setNegativeButton("No", null)
+                    .show();
+        });
     }
 
     private void setupButtonListeners() {
         dailyButton.setOnClickListener(v -> {
-            // Update selection flag and UI
             isDailySelected = true;
             setButtonSelected(dailyButton, true);
             setButtonSelected(monthlyButton, false);
-            updateSoldItemsReport(true); // Load daily sales
+            updateSoldItemsReport(true);
         });
 
         monthlyButton.setOnClickListener(v -> {
-            // Update selection flag and UI
             isDailySelected = false;
             setButtonSelected(monthlyButton, true);
             setButtonSelected(dailyButton, false);
-            updateSoldItemsReport(false); // Load monthly sales
+            updateSoldItemsReport(false);
         });
     }
 
     private void setDefaultButtonState() {
-        // Set "Daily" as the default selected button
         isDailySelected = true;
         setButtonSelected(dailyButton, true);
         setButtonSelected(monthlyButton, false);
     }
 
     /**
-     * Update the button appearance based on its selection state.
-     * When selected, the button's background tint is set to black and its text to white.
-     * When not selected, the button's background tint is set to white and its text to black.
+     * Updates the button appearance.
+     * Selected: background tint black, text white.
+     * Unselected: background tint white, text black.
      */
     private void setButtonSelected(Button button, boolean isSelected) {
         if (isSelected) {
@@ -119,7 +126,6 @@ public class ReportFragment extends Fragment {
         super.onResume();
         isFragmentVisible = true;
         updateProfitReports();
-        // Also update the sales list based on the current selection whenever the fragment is resumed
         updateSoldItemsReport(isDailySelected);
     }
 
@@ -132,27 +138,17 @@ public class ReportFragment extends Fragment {
     private void updateProfitReports() {
         CompletableFuture.supplyAsync(() -> {
             try {
-                // Get all sales records
                 List<Sales> allSales = mainDao.getAllSales();
-
-                // Get current date-time
                 Calendar now = Calendar.getInstance();
                 Date currentDate = now.getTime();
-
-                // Calculate 24 hours ago
                 Calendar yesterday = Calendar.getInstance();
                 yesterday.add(Calendar.HOUR_OF_DAY, -24);
                 Date yesterdayDate = yesterday.getTime();
-
-                // Calculate 30 days ago
                 Calendar thirtyDaysAgo = Calendar.getInstance();
                 thirtyDaysAgo.add(Calendar.DAY_OF_MONTH, -30);
                 Date thirtyDaysAgoDate = thirtyDaysAgo.getTime();
-
-                // Filter and calculate reports
                 ProfitReport dailyProfit = calculateProfitForDateRange(allSales, yesterdayDate, currentDate);
                 ProfitReport monthlyProfit = calculateProfitForDateRange(allSales, thirtyDaysAgoDate, currentDate);
-
                 return new ProfitReports(dailyProfit, monthlyProfit);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -165,18 +161,10 @@ public class ReportFragment extends Fragment {
         }, runnable -> mainHandler.post(runnable));
     }
 
-    /**
-     * This method loads all sales, then filters them based on the selected report type.
-     * For daily sales, it will include only sales from the last 24 hours.
-     * For monthly sales, it will include only sales from the last 30 days.
-     */
     private void updateSoldItemsReport(boolean isDaily) {
         CompletableFuture.supplyAsync(() -> {
             try {
-                // Get all sales records
                 List<Sales> allSales = mainDao.getAllSales();
-
-                // Create a SimpleDateFormat using the same format as stored in the Sales table
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy hh:mm a", Locale.ENGLISH);
                 Date now = new Date();
                 Calendar cal = Calendar.getInstance();
@@ -187,8 +175,6 @@ public class ReportFragment extends Fragment {
                     cal.add(Calendar.DAY_OF_MONTH, -30);
                 }
                 Date fromDate = cal.getTime();
-
-                // Filter sales: only include sales between fromDate and now
                 List<Sales> filteredSales = new ArrayList<>();
                 for (Sales sale : allSales) {
                     try {
@@ -200,8 +186,6 @@ public class ReportFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-
-                // Optionally sort the filtered sales in descending order (latest first)
                 Collections.sort(filteredSales, (s1, s2) -> {
                     try {
                         Date d1 = sdf.parse(s1.getDate());
@@ -212,7 +196,6 @@ public class ReportFragment extends Fragment {
                         return 0;
                     }
                 });
-
                 return filteredSales;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -230,7 +213,6 @@ public class ReportFragment extends Fragment {
         double totalProfit = 0;
         double totalTaxAmount = 0;
         double netProfit = 0;
-
         for (Sales sale : sales) {
             try {
                 Date saleDate = sdf.parse(sale.getDate());
@@ -251,7 +233,6 @@ public class ReportFragment extends Fragment {
     private void updateUIWithReports(ProfitReports reports) {
         String dailyReport = formatProfitReport(reports.dailyProfit);
         String monthlyReport = formatProfitReport(reports.monthlyProfit);
-
         mainHandler.post(() -> {
             if (isFragmentVisible) {
                 dailyReportTextView.setText(dailyReport);
@@ -262,19 +243,53 @@ public class ReportFragment extends Fragment {
 
     private String formatProfitReport(ProfitReport profit) {
         return String.format(Locale.getDefault(),
-                "Gross Profit: %.2f\n" +
-                        "Tax Amount: %.2f\n" +
-                        "Net Profit: %.2f",
-                profit.totalProfit,
-                profit.totalTaxAmount,
-                profit.netProfit);
+                "Gross Profit: %.2f\nTax Amount: %.2f\nNet Profit: %.2f",
+                profit.totalProfit, profit.totalTaxAmount, profit.netProfit);
     }
 
+    /**
+     * Reverses the sale:
+     * - Finds the item by sale.getItem_id(). If found, adds the sale quantity.
+     * - If not found, creates a new item based on sale details.
+     * - Deletes the sale record from the sales table.
+     */
+    private void reverseSale(Sales sale) {
+        CompletableFuture.runAsync(() -> {
+            // Check if the item already exists using sale.getItem_id()
+            Items item = mainDao.getItemById(sale.getItem_id());
+            if (item != null) {
+                // Update the item quantity
+                double newQuantity = item.getQuantity() + sale.getQuantity();
+                item.setQuantity(newQuantity);
+                mainDao.update(item);
+            } else {
+                // Create a new item using sale details
+                Items newItem = new Items();
+                newItem.setName(sale.getName());
+                newItem.setCategory(sale.getCategory());
+                newItem.setQuantity(sale.getQuantity());
+                newItem.setPurchasing_price(sale.getPurchasing_price());
+                newItem.setSelling_price(sale.getSelling_price());
+                newItem.setTax(sale.getTax());
+                newItem.setDate(sale.getDate());
+                mainDao.insert(newItem);
+            }
+            // Delete the sale record from sales history
+            mainDao.deleteSale(sale);
+        }).thenRunAsync(() -> {
+            mainHandler.post(() -> {
+                Toast.makeText(getContext(), "Sale reversed successfully", Toast.LENGTH_SHORT).show();
+                // Refresh the sales list after reversal
+                updateSoldItemsReport(isDailySelected);
+            });
+        }, runnable -> mainHandler.post(runnable));
+    }
+
+    // Helper classes for profit reports
     private static class ProfitReport {
         final double totalProfit;
         final double totalTaxAmount;
         final double netProfit;
-
         ProfitReport(double totalProfit, double totalTaxAmount, double netProfit) {
             this.totalProfit = totalProfit;
             this.totalTaxAmount = totalTaxAmount;
@@ -285,7 +300,6 @@ public class ReportFragment extends Fragment {
     private static class ProfitReports {
         final ProfitReport dailyProfit;
         final ProfitReport monthlyProfit;
-
         ProfitReports(ProfitReport dailyProfit, ProfitReport monthlyProfit) {
             this.dailyProfit = dailyProfit;
             this.monthlyProfit = monthlyProfit;

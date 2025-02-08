@@ -12,16 +12,25 @@ import java.util.List;
 
 public class SoldItemsAdapter extends RecyclerView.Adapter<SoldItemsAdapter.SoldItemViewHolder> {
     private List<Sales> soldItems;
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(Sales sale);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public void setSoldItems(List<Sales> soldItems) {
         this.soldItems = soldItems;
-        notifyDataSetChanged(); // Refresh the RecyclerView
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public SoldItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate your custom card layout
+        // Inflate your custom card layout (make sure it matches your provided XML)
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sold_card, parent, false);
         return new SoldItemViewHolder(view);
     }
@@ -33,14 +42,18 @@ public class SoldItemsAdapter extends RecyclerView.Adapter<SoldItemsAdapter.Sold
         holder.itemName.setText(sale.getName());
         holder.itemQuantity.setText("Quantity: " + sale.getQuantity());
         holder.itemDate.setText("Date: " + sale.getDate());
-
         // Right side content
         holder.itemId.setText("ID: " + sale.getId());
-        // Format selling price (SP) with two decimal places
         holder.itemSp.setText("SP: $" + String.format("%.2f", sale.getSelling_price()));
-        // Calculate profit as (Selling Price - Purchasing Price) * Quantity
         double profit = (sale.getSelling_price() - sale.getPurchasing_price()) * sale.getQuantity();
         holder.itemProfit.setText("Profit: $" + String.format("%.2f", profit));
+
+        // Set click listener to allow reversal when the user taps the card
+        holder.itemView.setOnClickListener(v -> {
+            if(listener != null) {
+                listener.onItemClick(sale);
+            }
+        });
     }
 
     @Override
@@ -53,7 +66,7 @@ public class SoldItemsAdapter extends RecyclerView.Adapter<SoldItemsAdapter.Sold
 
         SoldItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            // Bind all the views using the IDs from your card layout
+            // Bind views from your card layout
             itemName = itemView.findViewById(R.id.item_name);
             itemQuantity = itemView.findViewById(R.id.item_quantity);
             itemDate = itemView.findViewById(R.id.item_date);

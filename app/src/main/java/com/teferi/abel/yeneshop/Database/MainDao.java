@@ -157,6 +157,10 @@ public interface MainDao {
     @Query("SELECT * FROM Sales WHERE date >= :startDate AND date <= :endDate ORDER BY date DESC")
     List<Sales> getSalesByDateRange(String startDate, String endDate);
 
+    @Delete
+    void deleteSale(Sales sale);
+
+
 
 
 }
