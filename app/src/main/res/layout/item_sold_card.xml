@@ -10,29 +10,73 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/item_name"
-            android:layout_width="wrap_content"
+        <!-- Left side content -->
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Item Name"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/item_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Quantity: 10"
-            android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/afacad"
+                android:text="Item Name"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/item_date"
+            <TextView
+                android:id="@+id/item_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/afacad"
+                android:text="Quantity: 10"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/item_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/afacad"
+                android:text="Date: Fri, 7 Feb 2025 08:30 PM"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <!-- Right side content -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date: Fri, 7 Feb 2025 08:30 PM"
-            android:textSize="16sp"/>
+            android:orientation="vertical"
+            android:gravity="end">
+
+            <TextView
+                android:id="@+id/item_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/afacad"
+                android:text="ID: 123"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/item_sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/afacad"
+                android:text="SP: $10.00"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/item_profit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/afacad"
+                android:text="Profit: $5.00"
+                android:textSize="16sp"/>
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
+

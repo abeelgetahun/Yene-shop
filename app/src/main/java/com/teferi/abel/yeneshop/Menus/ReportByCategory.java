@@ -85,7 +85,7 @@ public class ReportByCategory extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Select Items Export Option");
 
-        String[] options = {"All Items (qty > 0)", "Sold Out Items (qty == 0)", "Items Above User Input"};
+        String[] options = {"All Items (qty >= 0)", "Sold Out Items (qty == 0)", "Items Above User Input"};
         builder.setItems(options, (dialog, which) -> {
             switch (which) {
                 case 0:

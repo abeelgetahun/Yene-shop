@@ -21,6 +21,7 @@ public class SoldItemsAdapter extends RecyclerView.Adapter<SoldItemsAdapter.Sold
     @NonNull
     @Override
     public SoldItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Inflate your custom card layout
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sold_card, parent, false);
         return new SoldItemViewHolder(view);
     }
@@ -28,9 +29,18 @@ public class SoldItemsAdapter extends RecyclerView.Adapter<SoldItemsAdapter.Sold
     @Override
     public void onBindViewHolder(@NonNull SoldItemViewHolder holder, int position) {
         Sales sale = soldItems.get(position);
+        // Left side content
         holder.itemName.setText(sale.getName());
         holder.itemQuantity.setText("Quantity: " + sale.getQuantity());
         holder.itemDate.setText("Date: " + sale.getDate());
+
+        // Right side content
+        holder.itemId.setText("ID: " + sale.getId());
+        // Format selling price (SP) with two decimal places
+        holder.itemSp.setText("SP: $" + String.format("%.2f", sale.getSelling_price()));
+        // Calculate profit as (Selling Price - Purchasing Price) * Quantity
+        double profit = (sale.getSelling_price() - sale.getPurchasing_price()) * sale.getQuantity();
+        holder.itemProfit.setText("Profit: $" + String.format("%.2f", profit));
     }
 
     @Override
@@ -39,13 +49,17 @@ public class SoldItemsAdapter extends RecyclerView.Adapter<SoldItemsAdapter.Sold
     }
 
     static class SoldItemViewHolder extends RecyclerView.ViewHolder {
-        TextView itemName, itemQuantity, itemDate;
+        TextView itemName, itemQuantity, itemDate, itemId, itemSp, itemProfit;
 
         SoldItemViewHolder(@NonNull View itemView) {
             super(itemView);
+            // Bind all the views using the IDs from your card layout
             itemName = itemView.findViewById(R.id.item_name);
             itemQuantity = itemView.findViewById(R.id.item_quantity);
             itemDate = itemView.findViewById(R.id.item_date);
+            itemId = itemView.findViewById(R.id.item_id);
+            itemSp = itemView.findViewById(R.id.item_sp);
+            itemProfit = itemView.findViewById(R.id.item_profit);
         }
     }
 }
