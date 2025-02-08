@@ -1,5 +1,6 @@
 package com.teferi.abel.yeneshop.Fragments;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -92,15 +93,15 @@ public class ReportFragment extends Fragment {
 
     /**
      * Update the button appearance based on its selection state.
-     * When active, we set a grey background with white text.
-     * When inactive, we use the brand color with black text.
+     * When selected, the button's background tint is set to black and its text to white.
+     * When not selected, the button's background tint is set to white and its text to black.
      */
     private void setButtonSelected(Button button, boolean isSelected) {
         if (isSelected) {
-            button.setBackgroundColor(getResources().getColor(R.color.grey));
+            button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black)));
             button.setTextColor(getResources().getColor(R.color.white));
         } else {
-            button.setBackgroundColor(getResources().getColor(R.color.brand_name));
+            button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
             button.setTextColor(getResources().getColor(R.color.black));
         }
     }
