@@ -27,6 +27,8 @@ import com.teferi.abel.yeneshop.R;
 import com.airbnb.lottie.LottieAnimationView;
 import com.teferi.abel.yeneshop.Utils.SalesExport;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -135,10 +137,6 @@ public class ReportByCategory extends AppCompatActivity {
         }, 5000);
     }
 
-    private void exportItemsToCSV(List<Items> itemsList, String filePrefix) {
-        // Similar to your existing exportToCSV for items (code omitted for brevity)
-        // ... [Your existing CSV export code for items]
-    }
 
 
 
@@ -255,6 +253,51 @@ public class ReportByCategory extends AppCompatActivity {
             animationView.setVisibility(LottieAnimationView.GONE);
             Toast.makeText(this, "Sales export completed successfully!", Toast.LENGTH_LONG).show();
         }, 3000);
+    }
+
+
+    private void exportItemsToCSV(List<Items> itemsList, String filePrefix) {
+        if (itemsList.isEmpty()) {
+            Toast.makeText(this, "No data to export", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String fileName = filePrefix + "_" + timestamp + ".csv";
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Downloads.DISPLAY_NAME, fileName);
+            values.put(MediaStore.Downloads.MIME_TYPE, "text/csv");
+            values.put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
+
+            Uri externalContentUri = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
+            Uri fileUri = getContentResolver().insert(externalContentUri, values);
+
+            if (fileUri != null) {
+                try (OutputStream outputStream = getContentResolver().openOutputStream(fileUri)) {
+                    writeCSV(outputStream, itemsList);
+                    Toast.makeText(this, "File saved to Downloads: " + fileName, Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(this, "Error saving file: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            // For older Android versions
+            try {
+                File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File file = new File(downloadsDir, fileName);
+
+                try (OutputStream outputStream = new FileOutputStream(file)) {
+                    writeCSV(outputStream, itemsList);
+                    Toast.makeText(this, "File saved to Downloads: " + fileName, Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(this, "Error saving file: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        }
     }
 
 
