@@ -1,32 +1,30 @@
 package com.teferi.abel.yeneshop.Fragments;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
+import com.teferi.abel.yeneshop.Adapter.SoldItemsAdapter;
 import com.teferi.abel.yeneshop.Database.MainDao;
 import com.teferi.abel.yeneshop.Database.RoomDB;
 import com.teferi.abel.yeneshop.Models.Sales;
 import com.teferi.abel.yeneshop.R;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 
 public class ReportFragment extends Fragment {
     private TextView dailyReportTextView, monthlyReportTextView;
@@ -34,6 +32,9 @@ public class ReportFragment extends Fragment {
     private MainDao mainDao;
     private Handler mainHandler;
     private boolean isFragmentVisible = false;
+    private RecyclerView soldItemsRecyclerView;
+    private SoldItemsAdapter soldItemsAdapter;
+    private Button dailyButton, monthlyButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,19 +42,62 @@ public class ReportFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_report, container, false);
         initializeViews(view);
         initializeDatabase();
-        updateProfitReports();
+        setupRecyclerView();
+        setupButtonListeners();
+        // Set default button state to Daily selected.
+        setDefaultButtonState();
+        updateProfitReports(); // Load profit reports
+        updateSoldItemsReport(true); // Default to daily sales report
         return view;
     }
 
     private void initializeViews(View view) {
         dailyReportTextView = view.findViewById(R.id.daily_report);
         monthlyReportTextView = view.findViewById(R.id.monthly_report);
+        soldItemsRecyclerView = view.findViewById(R.id.sold_items_recycler_view);
+        dailyButton = view.findViewById(R.id.report_page_daily);
+        monthlyButton = view.findViewById(R.id.report_page_monthly);
         mainHandler = new Handler(Looper.getMainLooper());
     }
 
     private void initializeDatabase() {
         database = RoomDB.getInstance(requireContext());
         mainDao = database.mainDao();
+    }
+
+    private void setupRecyclerView() {
+        soldItemsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        soldItemsAdapter = new SoldItemsAdapter();
+        soldItemsRecyclerView.setAdapter(soldItemsAdapter);
+    }
+
+    private void setupButtonListeners() {
+        dailyButton.setOnClickListener(v -> {
+            setButtonSelected(dailyButton, true);
+            setButtonSelected(monthlyButton, false);
+            updateSoldItemsReport(true); // Load daily sales
+        });
+
+        monthlyButton.setOnClickListener(v -> {
+            setButtonSelected(monthlyButton, true);
+            setButtonSelected(dailyButton, false);
+            updateSoldItemsReport(false); // Load monthly sales
+        });
+    }
+
+    private void setDefaultButtonState() {
+        // Set "Daily" as the default selected button
+        setButtonSelected(dailyButton, true);
+        setButtonSelected(monthlyButton, false);
+    }
+
+    private void setButtonSelected(Button button, boolean isSelected) {
+        // Change color based on selection: grey when active, default brand color when inactive.
+        if (isSelected) {
+            button.setBackgroundColor(getResources().getColor(R.color.grey)); // active color
+        } else {
+            button.setBackgroundColor(getResources().getColor(R.color.brand_name)); // inactive color
+        }
     }
 
     @Override
@@ -105,6 +149,66 @@ public class ReportFragment extends Fragment {
         }, runnable -> mainHandler.post(runnable));
     }
 
+    /**
+     * This method loads all sales, then filters them based on the selected report type.
+     * For daily sales, it will include only sales from the last 24 hours.
+     * For monthly sales, it will include only sales from the last 30 days.
+     */
+    private void updateSoldItemsReport(boolean isDaily) {
+        CompletableFuture.supplyAsync(() -> {
+            try {
+                // Get all sales records
+                List<Sales> allSales = mainDao.getAllSales();
+
+                // Create a SimpleDateFormat using the same format as stored in the Sales table
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy hh:mm a", Locale.ENGLISH);
+                Date now = new Date();
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(now);
+                if (isDaily) {
+                    cal.add(Calendar.HOUR_OF_DAY, -24);
+                } else {
+                    cal.add(Calendar.DAY_OF_MONTH, -30);
+                }
+                Date fromDate = cal.getTime();
+
+                // Filter sales: only include sales between fromDate and now
+                List<Sales> filteredSales = new ArrayList<>();
+                for (Sales sale : allSales) {
+                    try {
+                        Date saleDate = sdf.parse(sale.getDate());
+                        if (saleDate != null && saleDate.after(fromDate) && saleDate.before(now)) {
+                            filteredSales.add(sale);
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // Optionally sort the filtered sales in descending order (latest first)
+                Collections.sort(filteredSales, (s1, s2) -> {
+                    try {
+                        Date d1 = sdf.parse(s1.getDate());
+                        Date d2 = sdf.parse(s2.getDate());
+                        return d2.compareTo(d1);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        return 0;
+                    }
+                });
+
+                return filteredSales;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }).thenAcceptAsync(sales -> {
+            if (isFragmentVisible && sales != null) {
+                mainHandler.post(() -> soldItemsAdapter.setSoldItems(sales));
+            }
+        }, runnable -> mainHandler.post(runnable));
+    }
+
     private ProfitReport calculateProfitForDateRange(List<Sales> sales, Date startDate, Date endDate) {
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy hh:mm a", Locale.ENGLISH);
         double totalProfit = 0;
@@ -117,7 +221,6 @@ public class ReportFragment extends Fragment {
                 if (saleDate != null && !saleDate.before(startDate) && !saleDate.after(endDate)) {
                     double profit = (sale.getSelling_price() - sale.getPurchasing_price()) * sale.getQuantity();
                     double taxAmount = (sale.getSelling_price() * sale.getQuantity() * sale.getTax()) / 100;
-
                     totalProfit += profit;
                     totalTaxAmount += taxAmount;
                 }
@@ -125,15 +228,13 @@ public class ReportFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-
         netProfit = totalProfit - totalTaxAmount;
         return new ProfitReport(totalProfit, totalTaxAmount, netProfit);
     }
 
-
     private void updateUIWithReports(ProfitReports reports) {
-        String dailyReport = formatProfitReport( reports.dailyProfit);
-        String monthlyReport = formatProfitReport( reports.monthlyProfit);
+        String dailyReport = formatProfitReport(reports.dailyProfit);
+        String monthlyReport = formatProfitReport(reports.monthlyProfit);
 
         mainHandler.post(() -> {
             if (isFragmentVisible) {
@@ -145,7 +246,7 @@ public class ReportFragment extends Fragment {
 
     private String formatProfitReport(ProfitReport profit) {
         return String.format(Locale.getDefault(),
-                        "Gross Profit: %.2f\n" +
+                "Gross Profit: %.2f\n" +
                         "Tax Amount: %.2f\n" +
                         "Net Profit: %.2f",
                 profit.totalProfit,

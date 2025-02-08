@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".Fragments.ReportFragment">
 
+  <!-- Daily Profit Report -->
   <TextView
       android:text="Daily Report"
       android:layout_width="match_parent"
@@ -19,16 +19,17 @@
       android:textSize="20sp"
       android:gravity="center"/>
   <TextView
-        android:id="@+id/daily_report"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/arbutus"
-        android:textColor="#030081"
-        android:textSize="15sp"
-        android:gravity="center"/>
+      android:id="@+id/daily_report"
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginBottom="10dp"
+      android:fontFamily="@font/arbutus"
+      android:textColor="#030081"
+      android:textSize="15sp"
+      android:gravity="center"/>
 
+  <!-- Monthly Profit Report -->
   <TextView
       android:text="Monthly Report"
       android:layout_width="match_parent"
@@ -38,14 +39,50 @@
       android:textStyle="bold"
       android:textSize="20sp"
       android:gravity="center"/>
-    <TextView
-        android:layout_marginTop="10dp"
-        android:id="@+id/monthly_report"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:fontFamily="@font/arbutus"
-        android:textColor="#030081"
-        android:textSize="15sp"
-        android:gravity="center"/>
+  <TextView
+      android:id="@+id/monthly_report"
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:layout_marginTop="10dp"
+      android:fontFamily="@font/arbutus"
+      android:textColor="#030081"
+      android:textSize="15sp"
+      android:gravity="center"/>
 
+  <!-- Buttons for Daily and Monthly -->
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/report_page_daily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Daily"
+        android:backgroundTint="@color/brand_name"
+        android:fontFamily="@font/chewy"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:layout_marginRight="10dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/report_page_monthly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/brand_name"
+        android:fontFamily="@font/chewy"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:text="Monthly"/>
+  </LinearLayout>
+
+  <!-- RecyclerView for Sales List -->
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/sold_items_recycler_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="16dp"
+      tools:listitem="@layout/item_sold_card" />
 </LinearLayout>

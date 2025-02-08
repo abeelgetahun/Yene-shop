@@ -39,6 +39,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="230dp"
                 android:layout_height="250dp"
+                android:layout_marginTop="40dp"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="fitCenter"
                 android:layout_marginBottom="30dp"
