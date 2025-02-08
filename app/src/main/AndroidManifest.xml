@@ -2,19 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.DIAL_PHONE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.YeneShop"
-        tools:targetApi="31"
-
-        android:requestLegacyExternalStorage="true"
-        >
+        tools:targetApi="31">
+        <activity
+            android:name=".Sales_Export"
+            android:exported="false" />
         <activity
             android:name=".Menus.ReportByCategory"
             android:exported="false" />
@@ -68,9 +72,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.DIAL_PHONE" />
-
 
 </manifest>

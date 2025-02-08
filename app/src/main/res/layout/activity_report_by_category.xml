@@ -22,30 +22,53 @@
         tools:ignore="MissingConstraints" />
 
     <!-- Export Button -->
+
+    <!-- Lottie Animation (Export Animation) -->
+
     <Button
-        android:id="@+id/export_test"
+        android:id="@+id/item_export"
         android:layout_width="165dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/brand_name"
-        android:text="Export"
+        android:text="Export Items"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/export_animation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/repcategory"/>
+        app:layout_constraintTop_toBottomOf="@id/repcategory"
+        app:layout_constraintVertical_bias="0.0"
+        app:strokeColor="@color/black"
+        app:strokeWidth="2dp" />
 
-    <!-- Lottie Animation (Export Animation) -->
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/export_animation"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="7dp"
+        android:layout_height="99dp"
         android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_export"
         app:lottie_autoPlay="false"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/export_animation"
-        app:layout_constraintTop_toBottomOf="@id/export_test"
+        app:lottie_rawRes="@raw/export_animation" />
+
+    <Button
+        android:id="@+id/sales_export"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="292dp"
+        android:backgroundTint="@color/brand_name"
+        android:gravity="center"
+        android:text="Export Sales History"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/black"
+        app:strokeWidth="2dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

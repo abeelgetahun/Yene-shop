@@ -143,6 +143,24 @@ public interface MainDao {
     @Query("SELECT * FROM Items WHERE quantity = 0")
     List<Items> getSoldOutItems(); // ✅ Fix: No parameter
 
+    // sales export
+
+    @Query("SELECT * FROM Sales WHERE date >= datetime('now', '-1 day')")
+    List<Sales> getDailySales();
+
+    @Query("SELECT * FROM Sales WHERE strftime('%Y-%m', date) = strftime('%Y-%m', 'now')")
+    List<Sales> getMonthlySales();
+
+
+    @Query("SELECT * FROM Sales WHERE date BETWEEN :startDate AND :endDate ORDER BY date DESC")
+    List<Sales> getSalesByDateRange(String startDate, String endDate);
+
+    @Query("SELECT * FROM Sales WHERE date = :date ORDER BY date DESC")
+    List<Sales> getSalesByDate(String date);
+
+
+
+
 
 
 }
