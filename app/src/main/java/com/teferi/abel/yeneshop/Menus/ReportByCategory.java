@@ -140,74 +140,12 @@ public class ReportByCategory extends AppCompatActivity {
         // ... [Your existing CSV export code for items]
     }
 
-    private void showSalesExportDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Sales Report Type");
-
-        String[] options = {"Daily Sales (Last 24 Hours)", "Monthly Sales", "All Sales Data", "Select Date Range"};
-        builder.setItems(options, (dialog, which) -> {
-            switch (which) {
-                case 0:
-                    exportSalesWithAnimation("DAILY", null, null);
-                    break;
-                case 1:
-                    exportSalesWithAnimation("MONTHLY", null, null);
-                    break;
-                case 2:
-                    exportSalesWithAnimation("ALL_SALES", null, null);
-                    break;
-                case 3:
-                    showDatePicker();
-                    break;
-            }
-        });
-        builder.create().show();
-    }
-
 
 
 
     /**
      * Export selected items to CSV file
      */
-    private void exportToCSV(List<Items> itemsList, String filePrefix) {
-        String fileName = filePrefix + "_" +
-                new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()) + ".csv";
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            saveToDocuments(fileName, itemsList);
-        } else {
-            saveWithSAF(fileName);
-        }
-    }
-
-    private void saveToDocuments(String fileName, List<Items> itemsList) {
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
-        values.put(MediaStore.MediaColumns.MIME_TYPE, "text/csv");
-        values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS + "/YeneShop");
-
-        Uri fileUri = getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);
-        if (fileUri != null) {
-            try (OutputStream outputStream = getContentResolver().openOutputStream(fileUri)) {
-                writeCSV(outputStream, itemsList);
-                Toast.makeText(this, "File saved in Documents/YeneShop", Toast.LENGTH_LONG).show();
-            } catch (Exception e) {
-                Toast.makeText(this, "Error saving file: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        } else {
-            Toast.makeText(this, "Failed to create file", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void saveWithSAF(String fileName) {
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("text/csv");
-        intent.putExtra(Intent.EXTRA_TITLE, fileName);
-        startActivityForResult(intent, REQUEST_CODE_SAVE);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -257,16 +195,42 @@ public class ReportByCategory extends AppCompatActivity {
 
 
 
+    private void showSalesExportDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Sales Report Type");
+
+        String[] options = {"Daily Sales (Last 24 Hours)", "Monthly Sales (Last 30 Days)", "All Sales Data", "Select Start Date"};
+        builder.setItems(options, (dialog, which) -> {
+            switch (which) {
+                case 0:
+                    exportSalesWithAnimation("DAILY", null, null);
+                    break;
+                case 1:
+                    exportSalesWithAnimation("MONTHLY", null, null);
+                    break;
+                case 2:
+                    exportSalesWithAnimation("ALL_SALES", null, null);
+                    break;
+                case 3:
+                    showDatePicker();
+                    break;
+            }
+        });
+        builder.create().show();
+    }
 
     /**
-     * Shows a date picker dialog and then exports sales data for the selected date.
+     * Shows a date picker dialog. For custom export, exports data from the selected start date up to now.
      */
     private void showDatePicker() {
         final Calendar calendar = Calendar.getInstance();
         DatePickerDialog datePicker = new DatePickerDialog(this,
                 (view, year, month, dayOfMonth) -> {
-                    String selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
-                    exportSalesWithAnimation("CUSTOM_DATE", selectedDate, selectedDate);
+                    // Format selected date as yyyy-MM-dd
+                    String selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, dayOfMonth);
+                    // Use current date as end date
+                    String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                    exportSalesWithAnimation("CUSTOM_DATE", selectedDate, currentDate);
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -287,6 +251,9 @@ public class ReportByCategory extends AppCompatActivity {
             animationView.pauseAnimation();
             animationView.setVisibility(LottieAnimationView.GONE);
             Toast.makeText(this, "Sales export completed successfully!", Toast.LENGTH_LONG).show();
-        }, 5000);
+        }, 3000);
     }
+
+
+
 }

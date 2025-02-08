@@ -145,18 +145,17 @@ public interface MainDao {
 
     // sales export
 
+
+    //
     @Query("SELECT * FROM Sales WHERE date >= datetime('now', '-1 day')")
     List<Sales> getDailySales();
 
-    @Query("SELECT * FROM Sales WHERE strftime('%Y-%m', date) = strftime('%Y-%m', 'now')")
+    @Query("SELECT * FROM Sales WHERE date >= datetime('now', '-30 day')")
     List<Sales> getMonthlySales();
 
 
     @Query("SELECT * FROM Sales WHERE date BETWEEN :startDate AND :endDate ORDER BY date DESC")
     List<Sales> getSalesByDateRange(String startDate, String endDate);
-
-    @Query("SELECT * FROM Sales WHERE date = :date ORDER BY date DESC")
-    List<Sales> getSalesByDate(String date);
 
 
 

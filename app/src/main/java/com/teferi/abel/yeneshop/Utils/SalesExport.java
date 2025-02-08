@@ -27,12 +27,12 @@ public class SalesExport {
     }
 
     /**
-     * Export sales data based on the given exportType.
+     * Exports sales data based on the given exportType.
      * exportType can be:
      * "DAILY" - sales from last 24 hours,
-     * "MONTHLY" - sales from the current month,
-     * "ALL_SALES" - all sales data,
-     * "CUSTOM_DATE" - sales between startDate and endDate.
+     * "MONTHLY" - sales from the last 30 days,
+     * "ALL_SALES" - all sales records,
+     * "CUSTOM_DATE" - sales from user-selected start date up to now.
      */
     public void exportSales(String exportType, String startDate, String endDate) {
         List<Sales> salesList = getSalesData(exportType, startDate, endDate);
