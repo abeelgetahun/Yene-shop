@@ -37,6 +37,9 @@ public class ReportFragment extends Fragment {
     private SoldItemsAdapter soldItemsAdapter;
     private Button dailyButton, monthlyButton;
 
+    // New field to keep track of the currently selected report type
+    private boolean isDailySelected = true;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class ReportFragment extends Fragment {
         setupButtonListeners();
         setDefaultButtonState();  // Set Daily as default active button
         updateProfitReports();    // Load profit reports
-        updateSoldItemsReport(true); // Default to daily sales report
+        updateSoldItemsReport(isDailySelected); // Load the sales list based on default selection
         return view;
     }
 
@@ -73,12 +76,16 @@ public class ReportFragment extends Fragment {
 
     private void setupButtonListeners() {
         dailyButton.setOnClickListener(v -> {
+            // Update selection flag and UI
+            isDailySelected = true;
             setButtonSelected(dailyButton, true);
             setButtonSelected(monthlyButton, false);
             updateSoldItemsReport(true); // Load daily sales
         });
 
         monthlyButton.setOnClickListener(v -> {
+            // Update selection flag and UI
+            isDailySelected = false;
             setButtonSelected(monthlyButton, true);
             setButtonSelected(dailyButton, false);
             updateSoldItemsReport(false); // Load monthly sales
@@ -87,6 +94,7 @@ public class ReportFragment extends Fragment {
 
     private void setDefaultButtonState() {
         // Set "Daily" as the default selected button
+        isDailySelected = true;
         setButtonSelected(dailyButton, true);
         setButtonSelected(monthlyButton, false);
     }
@@ -111,6 +119,8 @@ public class ReportFragment extends Fragment {
         super.onResume();
         isFragmentVisible = true;
         updateProfitReports();
+        // Also update the sales list based on the current selection whenever the fragment is resumed
+        updateSoldItemsReport(isDailySelected);
     }
 
     @Override
