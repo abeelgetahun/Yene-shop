@@ -154,9 +154,8 @@ public interface MainDao {
     List<Sales> getMonthlySales();
 
 
-    @Query("SELECT * FROM Sales WHERE strftime('%Y-%m-%d', substr(date, instr(date, ',') + 2)) >= :startDate AND strftime('%Y-%m-%d', substr(date, instr(date, ',') + 2)) <= :endDate ORDER BY date DESC")
+    @Query("SELECT * FROM Sales WHERE date >= :startDate AND date <= :endDate ORDER BY date DESC")
     List<Sales> getSalesByDateRange(String startDate, String endDate);
-
 
 
 

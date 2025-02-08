@@ -48,17 +48,25 @@ public class SalesExport {
                     filePrefix = "All_Sales";
                     break;
                 case "CUSTOM_DATE":
+                    // Parse the start date to match the format stored in the database
+                    SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                    Date startDateParsed = inputDateFormat.parse(startDate);
+
+                    // Format the start date to match the database format
+                    SimpleDateFormat dbDateFormat = new SimpleDateFormat("EEE, d MMM yyyy hh:mm a", Locale.ENGLISH);
+                    String formattedStartDate = dbDateFormat.format(startDateParsed);
+
                     // Format the end date to include the entire day
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(new Date());
                     cal.set(Calendar.HOUR_OF_DAY, 23);
                     cal.set(Calendar.MINUTE, 59);
                     cal.set(Calendar.SECOND, 59);
-                    String formattedEndDate = sqlDateFormat.format(cal.getTime());
+                    String formattedEndDate = dbDateFormat.format(cal.getTime());
 
-                    // Ensure startDate is in correct format
-                    salesList = database.mainDao().getSalesByDateRange(startDate, formattedEndDate);
-                    filePrefix = "Sales_" + startDate + "_to_" + formattedEndDate;
+                    // Query the database with the correctly formatted dates
+                    salesList = database.mainDao().getSalesByDateRange(formattedStartDate, formattedEndDate);
+                    filePrefix = "Sales_" + startDate + "_to_" + sqlDateFormat.format(cal.getTime());
                     break;
                 default:
                     return;
