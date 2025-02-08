@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -44,6 +45,12 @@ public class ReportByCategory extends AppCompatActivity {
     private SalesExport salesExport;
     private ProgressDialog progressDialog; // For animation effect
 
+    // Add these as class fields in ReportByCategory.java
+    private FrameLayout animationContainer;
+    private LottieAnimationView exportAnimation;
+    private LottieAnimationView salesExportAnimation;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +71,11 @@ public class ReportByCategory extends AppCompatActivity {
 
         Button salesExportButton = findViewById(R.id.sales_export);
         salesExportButton.setOnClickListener(v -> showSalesExportDialog());
+
+        animationContainer = findViewById(R.id.animation_container);
+        exportAnimation = findViewById(R.id.export_animation);
+        salesExportAnimation = findViewById(R.id.sales_export_animation);
+
     }
 
     /**
@@ -115,28 +127,6 @@ public class ReportByCategory extends AppCompatActivity {
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         builder.create().show();
     }
-
-    /**
-     * Export selected items with an animation effect
-     */
-
-    private void exportItemsWithAnimation(List<Items> itemsList, String filePrefix) {
-        if (itemsList.isEmpty()) {
-            Toast.makeText(this, "No data to export", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        LottieAnimationView animationView = findViewById(R.id.export_animation);
-        animationView.setVisibility(LottieAnimationView.VISIBLE);
-        animationView.playAnimation();
-
-        new Handler().postDelayed(() -> {
-            exportItemsToCSV(itemsList, filePrefix);
-            animationView.pauseAnimation();
-            animationView.setVisibility(LottieAnimationView.GONE);
-            Toast.makeText(this, "Items export completed successfully!", Toast.LENGTH_LONG).show();
-        }, 5000);
-    }
-
 
 
 
@@ -242,22 +232,6 @@ public class ReportByCategory extends AppCompatActivity {
     }
 
 
-    /**
-     * Exports sales data with a 5-second animation delay.
-     */
-    private void exportSalesWithAnimation(final String exportType, final String startDate, final String endDate) {
-        LottieAnimationView animationView = findViewById(R.id.export_animation);
-        animationView.setVisibility(LottieAnimationView.VISIBLE);
-        animationView.playAnimation();
-
-        new Handler().postDelayed(() -> {
-            salesExport.exportSales(exportType, startDate, endDate);
-            animationView.pauseAnimation();
-            animationView.setVisibility(LottieAnimationView.GONE);
-            Toast.makeText(this, "Sales export completed successfully!", Toast.LENGTH_LONG).show();
-        }, 3000);
-    }
-
 
     private void exportItemsToCSV(List<Items> itemsList, String filePrefix) {
         if (itemsList.isEmpty()) {
@@ -304,5 +278,66 @@ public class ReportByCategory extends AppCompatActivity {
     }
 
 
+
+
+
+    // Replace the existing exportItemsWithAnimation method with this:
+    private void exportItemsWithAnimation(List<Items> itemsList, String filePrefix) {
+        if (itemsList.isEmpty()) {
+            Toast.makeText(this, "No data to export", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Show animation container with fade in
+        animationContainer.setVisibility(View.VISIBLE);
+        animationContainer.setAlpha(0f);
+        animationContainer.animate().alpha(1f).setDuration(300).start();
+
+        // Show and play the export animation
+        exportAnimation.setVisibility(View.VISIBLE);
+        salesExportAnimation.setVisibility(View.GONE);
+        exportAnimation.playAnimation();
+
+        new Handler().postDelayed(() -> {
+            exportItemsToCSV(itemsList, filePrefix);
+
+            // Fade out animation container
+            animationContainer.animate().alpha(0f).setDuration(300)
+                    .withEndAction(() -> {
+                        animationContainer.setVisibility(View.GONE);
+                        exportAnimation.pauseAnimation();
+                        exportAnimation.setVisibility(View.GONE);
+                    }).start();
+
+            Toast.makeText(this, "Items export completed successfully!", Toast.LENGTH_LONG).show();
+        }, 3000);
+    }
+
+    // Replace the existing exportSalesWithAnimation method with this:
+    private void exportSalesWithAnimation(final String exportType, final String startDate, final String endDate) {
+        // Show animation container with fade in
+        animationContainer.setVisibility(View.VISIBLE);
+        animationContainer.setAlpha(0f);
+        animationContainer.animate().alpha(1f).setDuration(300).start();
+
+        // Show and play the sales export animation
+        exportAnimation.setVisibility(View.GONE);
+        salesExportAnimation.setVisibility(View.VISIBLE);
+        salesExportAnimation.playAnimation();
+
+        new Handler().postDelayed(() -> {
+            salesExport.exportSales(exportType, startDate, endDate);
+
+            // Fade out animation container
+            animationContainer.animate().alpha(0f).setDuration(300)
+                    .withEndAction(() -> {
+                        animationContainer.setVisibility(View.GONE);
+                        salesExportAnimation.pauseAnimation();
+                        salesExportAnimation.setVisibility(View.GONE);
+                    }).start();
+
+            Toast.makeText(this, "Sales export completed successfully!", Toast.LENGTH_LONG).show();
+        }, 3000);
+    }
 
 }

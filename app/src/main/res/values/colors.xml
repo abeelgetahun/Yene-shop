@@ -25,5 +25,8 @@
     <color name="semi_black">#FFFFFF</color>
     <color name="semi_gray">#FFFFFF</color>
 
+    <color name="transparent">#80000000</color>
+
+
 
 </resources>
