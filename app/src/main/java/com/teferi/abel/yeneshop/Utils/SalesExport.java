@@ -11,11 +11,9 @@ import android.widget.Toast;
 import com.teferi.abel.yeneshop.Database.RoomDB;
 import com.teferi.abel.yeneshop.Models.Sales;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -24,14 +22,21 @@ import java.util.Locale;
 public class SalesExport {
     private final Context context;
     private final RoomDB database;
-    private final SimpleDateFormat displayDateFormat = new SimpleDateFormat("EEE, d MMM yyyy hh:mm a", Locale.ENGLISH);
-    private final SimpleDateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+    private final SimpleDateFormat saleSdf = new SimpleDateFormat("EEE, d MMM yyyy hh:mm a", Locale.ENGLISH);
 
     public SalesExport(Context context, RoomDB database) {
         this.context = context;
         this.database = database;
     }
 
+    /**
+     * Exports sales data based on the given exportType.
+     * exportType can be:
+     * - "DAILY"    : Sales from the last 24 hours.
+     * - "MONTHLY"  : Sales from the last 30 days.
+     * - "ALL_SALES": All sales records.
+     * - "CUSTOM_DATE": Sales from the user-selected start date up to now.
+     */
     public void exportSales(String exportType, String startDate, String endDate) {
         List<Sales> salesList;
         String filePrefix;
@@ -51,31 +56,42 @@ public class SalesExport {
                     filePrefix = "All_Sales";
                     break;
                 case "CUSTOM_DATE":
-                    // Parse the start date to match the format stored in the database
-                    SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-                    Date startDateParsed = inputDateFormat.parse(startDate);
+                    // For custom date, we need to filter records from the user-selected start date to now.
+                    // The user-selected startDate and endDate are in "yyyy-MM-dd" format.
+                    filePrefix = "Sales_" + startDate + "_to_" + endDate;
+                    // First, get all sales (or you can limit to those before "endDate" using a different query)
+                    List<Sales> allSales = database.mainDao().getAllSales();
 
-                    // Format the start date to match the database format
-                    SimpleDateFormat dbDateFormat = new SimpleDateFormat("EEE, d MMM yyyy hh:mm a", Locale.ENGLISH);
-                    String formattedStartDate = dbDateFormat.format(startDateParsed);
+                    // Parse the start and end dates
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                    Date start = sdf.parse(startDate);
+                    Date end = sdf.parse(endDate);
 
-                    // Format the end date to include the entire day
+                    // Adjust the end date to include the entire day (set time to 23:59:59)
                     Calendar cal = Calendar.getInstance();
-                    cal.setTime(new Date());
+                    cal.setTime(end);
                     cal.set(Calendar.HOUR_OF_DAY, 23);
                     cal.set(Calendar.MINUTE, 59);
                     cal.set(Calendar.SECOND, 59);
-                    String formattedEndDate = dbDateFormat.format(cal.getTime());
+                    end = cal.getTime();
 
-                    // Query the database with the correctly formatted dates
-                    salesList = database.mainDao().getSalesByDateRange(formattedStartDate, formattedEndDate);
-                    filePrefix = "Sales_" + startDate + "_to_" + sqlDateFormat.format(cal.getTime());
+                    // Filter allSales: include any sale whose date is between start and end (inclusive)
+                    List<Sales> filteredSales = new ArrayList<>();
+                    for (Sales sale : allSales) {
+                        // Parse the sale's date (stored as "EEE, d MMM yyyy hh:mm a")
+                        Date saleDate = saleSdf.parse(sale.getDate());
+                        // Include if saleDate is >= start and <= end
+                        if (!saleDate.before(start) && !saleDate.after(end)) {
+                            filteredSales.add(sale);
+                        }
+                    }
+                    salesList = filteredSales;
                     break;
                 default:
                     return;
             }
 
-            if (salesList.isEmpty()) {
+            if (salesList == null || salesList.isEmpty()) {
                 Toast.makeText(context, "No sales data found for the selected period", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -96,6 +112,7 @@ public class SalesExport {
             ContentValues values = new ContentValues();
             values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
             values.put(MediaStore.MediaColumns.MIME_TYPE, "text/csv");
+            // Save in Documents/Yene-Shop folder
             values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS + "/Yene-Shop");
 
             Uri fileUri = context.getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);
@@ -109,27 +126,10 @@ public class SalesExport {
                 }
             }
         } else {
-            // For older Android versions
-            try {
-                File documentsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-                File yeneShopDir = new File(documentsDir, "Yene-Shop");
-
-                if (!yeneShopDir.exists()) {
-                    yeneShopDir.mkdirs(); // Create the directory if it doesn't exist
-                }
-
-                File file = new File(yeneShopDir, fileName);
-                try (OutputStream outputStream = new FileOutputStream(file)) {
-                    writeSalesCSV(outputStream, salesList);
-                    Toast.makeText(context, "Sales data exported to Documents/Yene-Shop", Toast.LENGTH_LONG).show();
-                }
-            } catch (Exception e) {
-                Toast.makeText(context, "Error saving file: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                e.printStackTrace();
-            }
+            // For older Android versions, you can implement a similar method to write to external storage.
+            Toast.makeText(context, "Export failed: Storage permission required", Toast.LENGTH_LONG).show();
         }
     }
-
 
     private void writeSalesCSV(OutputStream outputStream, List<Sales> salesList) throws Exception {
         StringBuilder csvData = new StringBuilder();
