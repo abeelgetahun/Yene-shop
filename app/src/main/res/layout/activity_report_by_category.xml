@@ -23,65 +23,61 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <!-- Export Button -->
-
-    <!-- Sales Export Button -->
-    <Button
+    <!-- Export Items Record Button -->
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/item_export"
-        android:layout_width="165dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="63dp"
+        android:layout_width="251dp"
+        android:layout_height="62dp"
         android:backgroundTint="@color/brand_name"
-        android:text="Export Items"
+        android:fontFamily="@font/chewy"
+        android:text="Export Items Record"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/export_animation"
+        android:textSize="18sp"
+        android:drawableStart="@drawable/icon_file_download"
+        android:drawablePadding="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.44"
         app:strokeColor="@color/black"
         app:strokeWidth="2dp" />
 
-    <!-- Blur Background -->
-    <Button
+    <!-- Export Sales History Button -->
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sales_export"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="296dp"
+        android:layout_marginTop="56dp"
         android:backgroundTint="@color/brand_name"
+        android:fontFamily="@font/chewy"
         android:gravity="center"
         android:text="Export Sales History"
         android:textColor="@color/black"
         android:textSize="16sp"
+        android:drawableStart="@drawable/icon_file_download"
+        android:drawablePadding="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_export"
         app:strokeColor="@color/black"
         app:strokeWidth="2dp" />
 
-    <View
-        android:id="@+id/blur_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/transparent"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <!-- Replace the existing FrameLayout in activity_report_by_category.xml with this: -->
+    <!-- Animation Container -->
     <FrameLayout
         android:id="@+id/animation_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#80000000"
         android:clickable="true"
         android:focusable="true"
+        android:visibility="gone"
+        android:elevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,8 +88,7 @@
             android:layout_height="200dp"
             android:layout_gravity="center"
             app:cardCornerRadius="16dp"
-            app:cardElevation="8dp"
-            android:background="@color/white">
+            app:cardElevation="8dp">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/export_animation"
@@ -118,3 +113,4 @@
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
