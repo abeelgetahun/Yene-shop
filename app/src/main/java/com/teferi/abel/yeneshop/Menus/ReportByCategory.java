@@ -235,6 +235,9 @@ public class ReportByCategory extends AppCompatActivity {
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
+
+        // Set the maximum date to today
+        datePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
         datePicker.show();
     }
 

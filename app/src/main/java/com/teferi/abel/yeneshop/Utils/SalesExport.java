@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
@@ -12,7 +11,9 @@ import com.teferi.abel.yeneshop.Database.RoomDB;
 import com.teferi.abel.yeneshop.Models.Sales;
 
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -20,86 +21,91 @@ import java.util.Locale;
 public class SalesExport {
     private final Context context;
     private final RoomDB database;
+    private final SimpleDateFormat displayDateFormat = new SimpleDateFormat("EEE, d MMM yyyy hh:mm a", Locale.ENGLISH);
+    private final SimpleDateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
     public SalesExport(Context context, RoomDB database) {
         this.context = context;
         this.database = database;
     }
 
-    /**
-     * Exports sales data based on the given exportType.
-     * exportType can be:
-     * "DAILY" - sales from last 24 hours,
-     * "MONTHLY" - sales from the last 30 days,
-     * "ALL_SALES" - all sales records,
-     * "CUSTOM_DATE" - sales from user-selected start date up to now.
-     */
     public void exportSales(String exportType, String startDate, String endDate) {
-        List<Sales> salesList = getSalesData(exportType, startDate, endDate);
+        List<Sales> salesList;
+        String filePrefix;
 
-        if (salesList == null || salesList.isEmpty()) {
-            Toast.makeText(context, "No sales data to export", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String fileName = "Sales_Report_" + exportType + "_" +
-                new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()) + ".csv";
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            saveToDocuments(fileName, salesList);
-        } else {
-            Toast.makeText(context, "Export failed: Storage permission required", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private List<Sales> getSalesData(String exportType, String startDate, String endDate) {
         try {
             switch (exportType) {
                 case "DAILY":
-                    return database.mainDao().getDailySales();
+                    salesList = database.mainDao().getDailySales();
+                    filePrefix = "Daily_Sales";
+                    break;
                 case "MONTHLY":
-                    return database.mainDao().getMonthlySales();
+                    salesList = database.mainDao().getMonthlySales();
+                    filePrefix = "Monthly_Sales";
+                    break;
                 case "ALL_SALES":
-                    return database.mainDao().getAllSales();
+                    salesList = database.mainDao().getAllSales();
+                    filePrefix = "All_Sales";
+                    break;
                 case "CUSTOM_DATE":
-                    return database.mainDao().getSalesByDateRange(startDate, endDate);
+                    // Format the end date to include the entire day
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(new Date());
+                    cal.set(Calendar.HOUR_OF_DAY, 23);
+                    cal.set(Calendar.MINUTE, 59);
+                    cal.set(Calendar.SECOND, 59);
+                    String formattedEndDate = sqlDateFormat.format(cal.getTime());
 
+                    // Ensure startDate is in correct format
+                    salesList = database.mainDao().getSalesByDateRange(startDate, formattedEndDate);
+                    filePrefix = "Sales_" + startDate + "_to_" + formattedEndDate;
+                    break;
                 default:
-                    return database.mainDao().getAllSales();
+                    return;
             }
+
+            if (salesList.isEmpty()) {
+                Toast.makeText(context, "No sales data found for the selected period", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            exportToCSV(salesList, filePrefix);
+
         } catch (Exception e) {
-            Toast.makeText(context, "Database error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            return null;
+            Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
 
-    private void saveToDocuments(String fileName, List<Sales> salesList) {
-        try {
+    private void exportToCSV(List<Sales> salesList, String filePrefix) {
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String fileName = filePrefix + "_" + timestamp + ".csv";
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ContentValues values = new ContentValues();
-            values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
-            values.put(MediaStore.MediaColumns.MIME_TYPE, "text/csv");
-            values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS + "/YeneShop");
+            values.put(MediaStore.Downloads.DISPLAY_NAME, fileName);
+            values.put(MediaStore.Downloads.MIME_TYPE, "text/csv");
+            values.put(MediaStore.Downloads.RELATIVE_PATH, "Download");
 
-            Uri fileUri = context.getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);
-            if (fileUri != null) {
-                try (OutputStream outputStream = context.getContentResolver().openOutputStream(fileUri)) {
-                    writeCSV(outputStream, salesList);
-                    Toast.makeText(context, "Sales report saved in Documents/YeneShop", Toast.LENGTH_LONG).show();
+            Uri uri = context.getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
+            if (uri != null) {
+                try (OutputStream outputStream = context.getContentResolver().openOutputStream(uri)) {
+                    writeSalesCSV(outputStream, salesList);
+                    Toast.makeText(context, "Sales data exported successfully to Downloads folder", Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(context, "Error exporting sales data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
                 }
-            } else {
-                Toast.makeText(context, "Failed to create file", Toast.LENGTH_LONG).show();
             }
-        } catch (Exception e) {
-            Toast.makeText(context, "Error saving file: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
-    private void writeCSV(OutputStream outputStream, List<Sales> salesList) throws Exception {
-        if (outputStream == null) return;
-
+    private void writeSalesCSV(OutputStream outputStream, List<Sales> salesList) throws Exception {
         StringBuilder csvData = new StringBuilder();
+        // CSV Header
         csvData.append("ID,Item ID,Name,Category,Quantity,Purchasing Price,Selling Price,Tax,Date\n");
 
+        // CSV Data
         for (Sales sale : salesList) {
             csvData.append(sale.getId()).append(",");
             csvData.append(sale.getItem_id()).append(",");
@@ -114,7 +120,6 @@ public class SalesExport {
 
         outputStream.write(csvData.toString().getBytes());
         outputStream.flush();
-        outputStream.close();
     }
 
     private String escapeCsvField(String field) {
