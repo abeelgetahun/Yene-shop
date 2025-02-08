@@ -44,9 +44,8 @@ public class ReportFragment extends Fragment {
         initializeDatabase();
         setupRecyclerView();
         setupButtonListeners();
-        // Set default button state to Daily selected.
-        setDefaultButtonState();
-        updateProfitReports(); // Load profit reports
+        setDefaultButtonState();  // Set Daily as default active button
+        updateProfitReports();    // Load profit reports
         updateSoldItemsReport(true); // Default to daily sales report
         return view;
     }
@@ -91,12 +90,18 @@ public class ReportFragment extends Fragment {
         setButtonSelected(monthlyButton, false);
     }
 
+    /**
+     * Update the button appearance based on its selection state.
+     * When active, we set a grey background with white text.
+     * When inactive, we use the brand color with black text.
+     */
     private void setButtonSelected(Button button, boolean isSelected) {
-        // Change color based on selection: grey when active, default brand color when inactive.
         if (isSelected) {
-            button.setBackgroundColor(getResources().getColor(R.color.grey)); // active color
+            button.setBackgroundColor(getResources().getColor(R.color.grey));
+            button.setTextColor(getResources().getColor(R.color.white));
         } else {
-            button.setBackgroundColor(getResources().getColor(R.color.brand_name)); // inactive color
+            button.setBackgroundColor(getResources().getColor(R.color.brand_name));
+            button.setTextColor(getResources().getColor(R.color.black));
         }
     }
 
