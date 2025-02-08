@@ -4,12 +4,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
 import com.teferi.abel.yeneshop.Database.RoomDB;
 import com.teferi.abel.yeneshop.Models.Sales;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -91,22 +94,42 @@ public class SalesExport {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ContentValues values = new ContentValues();
-            values.put(MediaStore.Downloads.DISPLAY_NAME, fileName);
-            values.put(MediaStore.Downloads.MIME_TYPE, "text/csv");
-            values.put(MediaStore.Downloads.RELATIVE_PATH, "Download");
+            values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
+            values.put(MediaStore.MediaColumns.MIME_TYPE, "text/csv");
+            values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS + "/Yene-Shop");
 
-            Uri uri = context.getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
-            if (uri != null) {
-                try (OutputStream outputStream = context.getContentResolver().openOutputStream(uri)) {
+            Uri fileUri = context.getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);
+            if (fileUri != null) {
+                try (OutputStream outputStream = context.getContentResolver().openOutputStream(fileUri)) {
                     writeSalesCSV(outputStream, salesList);
-                    Toast.makeText(context, "Sales data exported successfully to Downloads folder", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Sales data exported to Documents/Yene-Shop", Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     Toast.makeText(context, "Error exporting sales data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
+        } else {
+            // For older Android versions
+            try {
+                File documentsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+                File yeneShopDir = new File(documentsDir, "Yene-Shop");
+
+                if (!yeneShopDir.exists()) {
+                    yeneShopDir.mkdirs(); // Create the directory if it doesn't exist
+                }
+
+                File file = new File(yeneShopDir, fileName);
+                try (OutputStream outputStream = new FileOutputStream(file)) {
+                    writeSalesCSV(outputStream, salesList);
+                    Toast.makeText(context, "Sales data exported to Documents/Yene-Shop", Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(context, "Error saving file: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
         }
     }
+
 
     private void writeSalesCSV(OutputStream outputStream, List<Sales> salesList) throws Exception {
         StringBuilder csvData = new StringBuilder();

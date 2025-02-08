@@ -233,51 +233,6 @@ public class ReportByCategory extends AppCompatActivity {
 
 
 
-    private void exportItemsToCSV(List<Items> itemsList, String filePrefix) {
-        if (itemsList.isEmpty()) {
-            Toast.makeText(this, "No data to export", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        String fileName = filePrefix + "_" + timestamp + ".csv";
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Downloads.DISPLAY_NAME, fileName);
-            values.put(MediaStore.Downloads.MIME_TYPE, "text/csv");
-            values.put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
-
-            Uri externalContentUri = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
-            Uri fileUri = getContentResolver().insert(externalContentUri, values);
-
-            if (fileUri != null) {
-                try (OutputStream outputStream = getContentResolver().openOutputStream(fileUri)) {
-                    writeCSV(outputStream, itemsList);
-                    Toast.makeText(this, "File saved to Downloads: " + fileName, Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    Toast.makeText(this, "Error saving file: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-            }
-        } else {
-            // For older Android versions
-            try {
-                File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                File file = new File(downloadsDir, fileName);
-
-                try (OutputStream outputStream = new FileOutputStream(file)) {
-                    writeCSV(outputStream, itemsList);
-                    Toast.makeText(this, "File saved to Downloads: " + fileName, Toast.LENGTH_LONG).show();
-                }
-            } catch (Exception e) {
-                Toast.makeText(this, "Error saving file: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                e.printStackTrace();
-            }
-        }
-    }
-
-
 
 
 
@@ -311,6 +266,53 @@ public class ReportByCategory extends AppCompatActivity {
 
             Toast.makeText(this, "Items export completed successfully!", Toast.LENGTH_LONG).show();
         }, 3000);
+    }
+
+    private void exportItemsToCSV(List<Items> itemsList, String filePrefix) {
+        if (itemsList.isEmpty()) {
+            Toast.makeText(this, "No data to export", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String fileName = filePrefix + "_" + timestamp + ".csv";
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
+            values.put(MediaStore.MediaColumns.MIME_TYPE, "text/csv");
+            values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS + "/Yene-Shop");
+
+            Uri fileUri = getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);
+            if (fileUri != null) {
+                try (OutputStream outputStream = getContentResolver().openOutputStream(fileUri)) {
+                    writeCSV(outputStream, itemsList);
+                    Toast.makeText(this, "File saved to Documents/Yene-Shop: " + fileName, Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(this, "Error saving file: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            // For Android versions below Q
+            try {
+                File documentsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+                File yeneShopDir = new File(documentsDir, "Yene-Shop");
+
+                if (!yeneShopDir.exists()) {
+                    yeneShopDir.mkdirs(); // Create the directory if it doesn't exist
+                }
+
+                File file = new File(yeneShopDir, fileName);
+                try (OutputStream outputStream = new FileOutputStream(file)) {
+                    writeCSV(outputStream, itemsList);
+                    Toast.makeText(this, "File saved to Documents/Yene-Shop: " + fileName, Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(this, "Error saving file: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        }
     }
 
     // Replace the existing exportSalesWithAnimation method with this:
