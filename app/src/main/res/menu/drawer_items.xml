@@ -11,7 +11,7 @@
     <item
         android:icon="@drawable/ic_menu_report"
         android:id="@+id/navReport"
-        android:title="Report by category" />
+        android:title="Export" />
     </group>
 
     <group
