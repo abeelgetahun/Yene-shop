@@ -84,37 +84,8 @@
                 android:paddingVertical="20dp"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btnLinkedIn_setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:drawableTop="@drawable/ic_linkedin_black"
-                    android:drawablePadding="4dp"
-                    android:text="LinkedIn"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/faster_one"
-                    android:textColor="@color/black"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:padding="5dp" />
 
-                <!--
-                phone button
-                <Button
-                    android:id="@+id/btnPhoneSetting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:drawableTop="@drawable/ic_phone_black"
-                    android:drawablePadding="4dp"
-                    android:text="Phone no."
-                    android:textSize="13sp"
-                    android:fontFamily="@font/faster_one"
-                    android:textColor="@color/black"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:padding="5dp" />
 
-                -->
                 <Button
                     android:id="@+id/btnTelegramSetting"
                     android:layout_width="wrap_content"
