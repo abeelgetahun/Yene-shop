@@ -78,7 +78,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         }
 
         public void bind(Items item, OnItemClickListener listener) {
-            itemId.setText("# " + item.getId());
+            itemId.setText("ID: " + item.getId());
             itemName.setText(item.getName());
             itemCategory.setText(item.getCategory());
             itemPP.setText(String.valueOf(item.getPurchasing_price()));

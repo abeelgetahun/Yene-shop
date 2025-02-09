@@ -41,6 +41,7 @@
             android:paddingTop="50dp"
             android:paddingHorizontal="20dp">
 
+
             <ImageView
                 android:id="@+id/animatedEmailIcon"
                 android:layout_width="match_parent"
