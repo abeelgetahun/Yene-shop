@@ -22,6 +22,7 @@ import java.util.Locale;
 public class SalesExport {
     private final Context context;
     private final RoomDB database;
+    // This date format matches your stored sales date format, e.g., "Sat, 8 Feb 2025 11:13 AM"
     private final SimpleDateFormat saleSdf = new SimpleDateFormat("EEE, d MMM yyyy hh:mm a", Locale.ENGLISH);
 
     public SalesExport(Context context, RoomDB database) {
@@ -44,11 +45,33 @@ public class SalesExport {
         try {
             switch (exportType) {
                 case "DAILY":
-                    salesList = database.mainDao().getDailySales();
+                    // Retrieve all sales and filter to only include those within the last 24 hours.
+                    List<Sales> allSalesDaily = database.mainDao().getAllSales();
+                    Date now = new Date();
+                    Date cutoff = new Date(now.getTime() - (24L * 60 * 60 * 1000));  // 24 hours ago
+                    List<Sales> dailySales = new ArrayList<>();
+                    for (Sales sale : allSalesDaily) {
+                        Date saleDate = saleSdf.parse(sale.getDate());
+                        if (saleDate.after(cutoff)) {
+                            dailySales.add(sale);
+                        }
+                    }
+                    salesList = dailySales;
                     filePrefix = "Daily_Sales";
                     break;
                 case "MONTHLY":
-                    salesList = database.mainDao().getMonthlySales();
+                    // Retrieve all sales and filter to only include those within the last 30 days.
+                    List<Sales> allSalesMonthly = database.mainDao().getAllSales();
+                    Date nowMonthly = new Date();
+                    Date cutoffMonthly = new Date(nowMonthly.getTime() - (30L * 24 * 60 * 60 * 1000));  // 30 days ago
+                    List<Sales> monthlySales = new ArrayList<>();
+                    for (Sales sale : allSalesMonthly) {
+                        Date saleDate = saleSdf.parse(sale.getDate());
+                        if (saleDate.after(cutoffMonthly)) {
+                            monthlySales.add(sale);
+                        }
+                    }
+                    salesList = monthlySales;
                     filePrefix = "Monthly_Sales";
                     break;
                 case "ALL_SALES":
@@ -57,31 +80,24 @@ public class SalesExport {
                     break;
                 case "CUSTOM_DATE":
                     // For custom date, we need to filter records from the user-selected start date to now.
-                    // The user-selected startDate and endDate are in "yyyy-MM-dd" format.
                     filePrefix = "Sales_" + startDate + "_to_" + endDate;
-                    // First, get all sales (or you can limit to those before "endDate" using a different query)
-                    List<Sales> allSales = database.mainDao().getAllSales();
-
-                    // Parse the start and end dates
+                    List<Sales> allSalesCustom = database.mainDao().getAllSales();
+                    // Parse the start and end dates (assuming they are passed in "yyyy-MM-dd" format)
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-                    Date start = sdf.parse(startDate);
-                    Date end = sdf.parse(endDate);
-
+                    Date customStart = sdf.parse(startDate);
+                    Date customEnd = sdf.parse(endDate);
                     // Adjust the end date to include the entire day (set time to 23:59:59)
                     Calendar cal = Calendar.getInstance();
-                    cal.setTime(end);
+                    cal.setTime(customEnd);
                     cal.set(Calendar.HOUR_OF_DAY, 23);
                     cal.set(Calendar.MINUTE, 59);
                     cal.set(Calendar.SECOND, 59);
-                    end = cal.getTime();
+                    customEnd = cal.getTime();
 
-                    // Filter allSales: include any sale whose date is between start and end (inclusive)
                     List<Sales> filteredSales = new ArrayList<>();
-                    for (Sales sale : allSales) {
-                        // Parse the sale's date (stored as "EEE, d MMM yyyy hh:mm a")
+                    for (Sales sale : allSalesCustom) {
                         Date saleDate = saleSdf.parse(sale.getDate());
-                        // Include if saleDate is >= start and <= end
-                        if (!saleDate.before(start) && !saleDate.after(end)) {
+                        if (!saleDate.before(customStart) && !saleDate.after(customEnd)) {
                             filteredSales.add(sale);
                         }
                     }
@@ -126,7 +142,7 @@ public class SalesExport {
                 }
             }
         } else {
-            // For older Android versions, you can implement a similar method to write to external storage.
+            // For older Android versions, you can implement similar logic to write to external storage.
             Toast.makeText(context, "Export failed: Storage permission required", Toast.LENGTH_LONG).show();
         }
     }
