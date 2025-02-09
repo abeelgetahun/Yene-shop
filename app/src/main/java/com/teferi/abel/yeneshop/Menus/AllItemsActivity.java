@@ -1,10 +1,12 @@
 package com.teferi.abel.yeneshop.Menus;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -23,6 +25,7 @@ public class AllItemsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AllItemsAdapter adapter;
     private RoomDB database;
+    private static final int UPDATE_ITEM_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,7 @@ public class AllItemsActivity extends AppCompatActivity {
         List<Items> itemsList = database.mainDao().getAll();
 
         // Initialize and set adapter
-        adapter = new AllItemsAdapter(itemsList);
+        adapter = new AllItemsAdapter(this, itemsList);
         recyclerView.setAdapter(adapter);
 
         // Set back button click listener
@@ -61,6 +64,16 @@ public class AllItemsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == UPDATE_ITEM_REQUEST_CODE && resultCode == RESULT_OK) {
+            // Refresh the list when returning from ItemUpdate activity
+            List<Items> itemsList = database.mainDao().getAll();
+            adapter.updateItems(itemsList);
+        }
     }
 
     @Override

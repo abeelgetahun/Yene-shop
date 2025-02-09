@@ -1,5 +1,7 @@
 package com.teferi.abel.yeneshop.Adapters;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.teferi.abel.yeneshop.ItemUpdate;
 import com.teferi.abel.yeneshop.Models.Items;
 import com.teferi.abel.yeneshop.R;
 
@@ -18,8 +21,11 @@ import java.util.List;
 
 public class AllItemsAdapter extends RecyclerView.Adapter<AllItemsAdapter.ViewHolder> {
     private List<Items> itemsList;
+    private Activity activity;
+    private static final int UPDATE_ITEM_REQUEST_CODE = 100;
 
-    public AllItemsAdapter(List<Items> itemsList) {
+    public AllItemsAdapter(Activity activity, List<Items> itemsList) {
+        this.activity = activity;
         this.itemsList = itemsList;
         // Sort items by name in ascending order
         Collections.sort(this.itemsList, new Comparator<Items>() {
@@ -51,6 +57,16 @@ public class AllItemsAdapter extends RecyclerView.Adapter<AllItemsAdapter.ViewHo
         // Calculate expected profit
         double expectedProfit = (item.getSelling_price() - item.getPurchasing_price()) * item.getQuantity();
         holder.ep.setText("EP: " + String.format("%.2f", expectedProfit));
+
+        // Set click listener for the card
+        holder.itemContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, ItemUpdate.class);
+                intent.putExtra("item_id", item.getId());
+                activity.startActivityForResult(intent, UPDATE_ITEM_REQUEST_CODE);
+            }
+        });
     }
 
     @Override
