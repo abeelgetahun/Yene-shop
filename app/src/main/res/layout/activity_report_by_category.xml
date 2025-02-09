@@ -7,6 +7,7 @@
     android:background="@color/white"
     tools:context=".Menus.ReportByCategory">
 
+
     <!-- Back Button -->
     <ImageButton
         android:id="@+id/repcategory"
@@ -26,8 +27,8 @@
     <!-- Export Items Record Button -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/item_export"
-        android:layout_width="251dp"
-        android:layout_height="62dp"
+        android:layout_width="250dp"
+        android:layout_height="75dp"
         android:backgroundTint="@color/brand_name"
         android:fontFamily="@font/chewy"
         android:text="Export Items Record"
@@ -48,8 +49,8 @@
     <!-- Export Sales History Button -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sales_export"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="75dp"
         android:layout_marginTop="56dp"
         android:backgroundTint="@color/brand_name"
         android:fontFamily="@font/chewy"

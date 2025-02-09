@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:paddingHorizontal="25dp"
     tools:context=".Menus.HelpActivity">
 
     <!-- Back Button -->
@@ -23,15 +22,12 @@
         android:contentDescription="Back Button"
         app:tint="@color/black"/>
 
-
     <!-- Scrollable Content -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:fillViewport="true">
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,6 +44,7 @@
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/help_image" />
 
+            <!-- Title -->
             <TextView
                 android:id="@+id/tv_story"
                 android:layout_width="match_parent"
@@ -61,6 +58,7 @@
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
+            <!-- Description -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,20 +66,20 @@
                 android:layout_marginTop="-5dp"
                 android:fontFamily="@font/averia_libre_light"
                 android:lineSpacingExtra="2dp"
-                android:text="Yene Shop Manager is your all-in-one solution for managing your shop's inventory and sales. It helps you:
-
-Track which items are in stock and which are out.
-Monitor the exact quantities of each item in your store.
-Simplify selling items directly from your inventory.
-Automatically generate gross, net, and total sales reports, including daily and monthly summaries.
-Calculate taxes on your sales effortlessly.
-With Yene Shop Manager, running your store becomes smoother, smarter, and stress-free.
-
-"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:paddingBottom="10dp"/>
+                android:paddingBottom="10dp"
+                android:text="Yene Shop Manager is a comprehensive retail management solution designed to streamline your business operations. It offers advanced inventory tracking, seamless sales processing, and detailed financial reporting. With Yene Shop Manager you can:
 
+• Monitor real‐time stock levels and track every item in your inventory.
+• Process sales transactions efficiently while automatically updating your records.
+• Generate professional daily and monthly reports with breakdowns of gross, net, and tax figures.
+• Export your sales and inventory data for backup or further analysis.
+• Utilize the innovative ‘Return Sold Items’ feature to easily reverse a sale and restore stock levels.
+
+Experience a smarter, more efficient way to manage your shop with Yene Shop Manager." />
+
+            <!-- How to Use Title -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,9 +89,9 @@ With Yene Shop Manager, running your store becomes smoother, smarter, and stress
                 android:text="How to Use?"
                 android:fontFamily="@font/carter_one"
                 android:textColor="@color/black"
-                android:gravity="center_horizontal"
-                />
+                android:gravity="center_horizontal" />
 
+            <!-- Adding Items -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -114,11 +112,19 @@ With Yene Shop Manager, running your store becomes smoother, smarter, and stress
                 android:fontFamily="@font/averia_libre_light"
                 android:lineSpacingExtra="2dp"
                 android:paddingStart="8dp"
-                android:text="• Go to the app's Home page and tap the &quot;ADD&quot; button.\n• Enter the item's details, including:\n• Item Name (e.g. &quot;Cocacola&quot;)\n• Category (e.g. &quot;SOFT DRINK&quot;)\n• Item Quantity (e.g. &quot;24&quot;)\n• Item Purchasing price (e.g. &quot;50 Birr&quot;)\n• Item Selling price (e.g. &quot;60 Birr&quot;)\n• Item Tax (e.g. &quot;15%&quot;)\n• Tap &quot;ADD&quot;, and the item will instantly be added to your inventory."
+                android:text="• Go to the Home page and tap the 'ADD' button.
+• Enter the item's details, including:
+    – Item Name (e.g., 'Coca-Cola')
+    – Category (e.g., 'SOFT DRINK')
+    – Quantity (e.g., '24')
+    – Purchasing Price (e.g., '50 Birr')
+    – Selling Price (e.g., '60 Birr')
+    – Tax Percentage (e.g., '15%')
+• Tap 'ADD' to instantly include the item in your inventory."
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-
+            <!-- Viewing Items -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -139,11 +145,13 @@ With Yene Shop Manager, running your store becomes smoother, smarter, and stress
                 android:fontFamily="@font/averia_libre_light"
                 android:lineSpacingExtra="2dp"
                 android:paddingStart="8dp"
-                android:text="• Tap the &quot;STORE&quot; button on the Home page.\n• Items will be displayed, neatly categorized.\n• If you want to focus on a specific category, tap that category to see its items."
+                android:text="• Tap the 'STORE' button on the Home page.
+• Items are displayed in a well-organized, categorized layout.
+• To filter by category, simply tap the desired category."
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-
+            <!-- Selling Items -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -164,10 +172,14 @@ With Yene Shop Manager, running your store becomes smoother, smarter, and stress
                 android:fontFamily="@font/averia_libre_light"
                 android:lineSpacingExtra="2dp"
                 android:paddingStart="8dp"
-                android:text="• Go to the Home page and tap the &quot;SALES&quot; button.\n• Search for the item using its ID or Name.\n• Enter the quantity to be sold and the selling price.\n• Tap &quot;Sale&quot;, and the app will automatically update your inventory and sales records."
+                android:text="• On the Home page, tap the 'SALES' button.
+• Locate the item by searching its ID or Name.
+• Enter the quantity sold and confirm the selling price.
+• Tap 'Sale' to complete the transaction. The app will update your inventory and record the sale automatically."
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
+            <!-- Updating Items -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -188,10 +200,13 @@ With Yene Shop Manager, running your store becomes smoother, smarter, and stress
                 android:fontFamily="@font/averia_libre_light"
                 android:lineSpacingExtra="2dp"
                 android:paddingStart="8dp"
-                android:text="• Tap &quot;STORE&quot; and choose the category of the item you want to modify.\n• Find the item and tap on it.\n• Update the item's attributes as needed..\n• Save the changes, and your inventory will be updated instantly."
+                android:text="• Tap 'STORE' and select the category of the item you wish to modify.
+• Choose the item and update its attributes as needed.
+• Save the changes to update your inventory immediately."
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
+            <!-- Deleting Items -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -212,15 +227,38 @@ With Yene Shop Manager, running your store becomes smoother, smarter, and stress
                 android:fontFamily="@font/averia_libre_light"
                 android:lineSpacingExtra="2dp"
                 android:paddingStart="8dp"
-                android:text="• Tap &quot;STORE&quot; and navigate to the category of the item you want to delete.\n• Find the item and tap on it.\n• Choose the delete option, and the item will be removed from your inventory."
+                android:text="• Navigate to 'STORE' and locate the category of the item you want to remove.
+• Select the item and choose the delete option to remove it from your inventory."
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <!-- Export and Return Sold Items Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/averia_libre_light"
+                android:gravity="start"
+                android:text="Exporting Data &amp; Reversing Sales"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:paddingVertical="10dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:background="#FFFFFF"
+                android:fontFamily="@font/averia_libre_light"
+                android:lineSpacingExtra="2dp"
+                android:paddingStart="8dp"
+                android:text="• To export your sales or inventory data, tap the 'Export' option available in the menus. You can save your data as a CSV or PDF file for further analysis or record-keeping.
+• If a sale needs to be reversed, simply navigate to the Reports section, tap on the relevant sales record, and confirm the return. The app will automatically restore the sold quantity to your inventory and remove the record from your sales history."
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_marginBottom="150dp"/>
 
-
-
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
