@@ -1,33 +1,29 @@
 package com.teferi.abel.yeneshop.Menus;
 
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.teferi.abel.yeneshop.R;
 
-
 public class AboutActivity extends AppCompatActivity {
-    // Social media URLs
-    private static final String FACEBOOK_URL = "https://www.facebook.com/abel.getahun.370";
-    private static final String INSTAGRAM_URL = "https://www.instagram.com/abelu_23";
-    private static final String LINKEDIN_URL = "https://www.linkedin.com/in/abel-getahun-625060291?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app";
-    private static final String TWITTER_URL = "https://x.com/Ab_el__?t=Yt3BX66RsxietbVii9-eVA&s=35";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +32,31 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         initializeViews();
 
-
         ImageView imageView = findViewById(R.id.gifImageView_about);
+        ProgressBar progressBar = findViewById(R.id.progress_bar);
 
-        // Load GIF from drawable folder
+        // Ensure the progress bar is visible until the GIF is loaded.
+        progressBar.setVisibility(View.VISIBLE);
+
+        // Load the GIF using Glide.
         Glide.with(this)
                 .asGif()
                 .load(R.drawable.gif_about)
+                .listener(new RequestListener<GifDrawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                                Target<GifDrawable> target, boolean isFirstResource) {
+                        progressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GifDrawable resource, Object model,
+                                                   Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
+                        progressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+                })
                 .into(imageView);
     }
 
@@ -52,7 +66,8 @@ public class AboutActivity extends AppCompatActivity {
             window.setStatusBarColor(getColor(R.color.white));
             window.setNavigationBarColor(getColor(R.color.white));
 
-            WindowInsetsControllerCompat windowInsetsController = WindowCompat.getInsetsController(window, window.getDecorView());
+            WindowInsetsControllerCompat windowInsetsController =
+                    WindowCompat.getInsetsController(window, window.getDecorView());
             windowInsetsController.setAppearanceLightStatusBars(true);
             windowInsetsController.setAppearanceLightNavigationBars(true);
         }
@@ -63,10 +78,7 @@ public class AboutActivity extends AppCompatActivity {
         if (fabBack != null) {
             fabBack.setOnClickListener(v -> finish());
         }
-
         setAppVersion();
-//        setupSocialMediaButtons();
-        //check this
     }
 
     private void setAppVersion() {
@@ -81,40 +93,6 @@ public class AboutActivity extends AppCompatActivity {
                 e.printStackTrace();
                 appVersion.setVisibility(View.GONE);
             }
-        }
-    }
-
-    private void setupSocialMediaButtons() {
-        Button btnFacebook = findViewById(R.id.btnfacebook);
-        Button btnInstagram = findViewById(R.id.btnInstagram);
-        Button btnLinkedIn = findViewById(R.id.btnLinkedIn);
-        Button btnTwitter = findViewById(R.id.btnx);
-
-        if (btnFacebook != null) {
-            btnFacebook.setOnClickListener(v -> openUrl(FACEBOOK_URL));
-        }
-        if (btnInstagram != null) {
-            btnInstagram.setOnClickListener(v -> openUrl(INSTAGRAM_URL));
-        }
-        if (btnLinkedIn != null) {
-            btnLinkedIn.setOnClickListener(v -> openUrl(LINKEDIN_URL));
-        }
-        if (btnTwitter != null) {
-            btnTwitter.setOnClickListener(v -> openUrl(TWITTER_URL));
-        }
-    }
-
-    private void openUrl(String url) {
-        try {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, "No application can handle this request.", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        } catch (Exception e) {
-            Toast.makeText(this, "Error opening link.", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
         }
     }
 }

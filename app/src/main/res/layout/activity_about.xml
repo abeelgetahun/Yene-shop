@@ -22,7 +22,6 @@
       android:contentDescription="Back Button"
       app:tint="@color/black"/>
 
-
   <!-- Scrollable Content -->
   <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
@@ -30,149 +29,87 @@
       android:clipToPadding="false"
       android:fillViewport="true">
 
-
-
+    <!-- Parent LinearLayout centers the CardView -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
-        android:paddingTop="50dp"
-        android:paddingHorizontal="20dp">
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="40dp">
 
-      <ImageView
-          android:id="@+id/gifImageView_about"
-          android:layout_width="match_parent"
-          android:layout_height="300dp"
-          android:layout_gravity="top" />
-
-      <TextView
+      <!-- CardView Container -->
+      <androidx.cardview.widget.CardView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="20dp"
-          android:fontFamily="@font/averia_libre_light"
-          android:text="Yene shop manager"
-          android:textColor="@color/black"
-          android:textSize="25dp"
-          android:gravity="center_horizontal"
-          android:textStyle="bold" />
-      <TextView
-          android:id="@+id/app_version"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="center_horizontal"
-          android:background="#FFFFFF"
-          android:fontFamily="@font/averia_libre_light"
-          android:paddingStart="8dp"
-          android:paddingVertical="5dp"
-          android:text="version: 1.0.6"
-          android:textColor="@color/black"
-          android:textSize="18sp" />
+          app:cardCornerRadius="8dp"
+          app:cardElevation="12dp"
+          android:layout_margin="16dp">
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="center_horizontal"
-          android:background="#FFFFFF"
-          android:fontFamily="@font/averia_libre_light"
-          android:paddingStart="8dp"
-          android:paddingTop="15dp"
-          android:text="Developed by Abel G."
-          android:textColor="@color/black"
-          android:textStyle="bold"
-          android:textSize="18sp" />
-
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="#FFFFFF"-->
-<!--            android:fontFamily="@font/averia_libre_light"-->
-<!--            android:gravity="center_horizontal"-->
-<!--            android:paddingVertical="5dp"-->
-<!--            android:paddingStart="8dp"-->
-<!--            android:text="Teferi Technology solution"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp" />-->
-
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="center_horizontal"
-          android:background="#FFFFFF"
-          android:fontFamily="@font/margarine"
-          android:paddingTop="30dp"
-          android:text="Follow me"
-          android:textColor="@color/black"
-          android:textStyle="bold"
-          android:textSize="22sp" />
-
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="center"
-          android:paddingVertical="20dp"
-          android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnLinkedIn"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="5dp"
-            android:drawableTop="@drawable/ic_linkedin"
-            android:drawablePadding="4dp"
-            android:text="LinkedIn"
-            android:textSize="13sp"
-            android:fontFamily="@font/faster_one"
-            android:textColor="@color/black"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="5dp" />
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:gravity="center">
 
-        <Button
-            android:id="@+id/btnInstagram"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="5dp"
-            android:drawableTop="@drawable/ic_instagram"
-            android:drawablePadding="4dp"
-            android:text="Instagram"
-            android:textSize="13sp"
-            android:fontFamily="@font/faster_one"
-            android:textColor="@color/black"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="5dp" />
+          <!-- FrameLayout to overlay ImageView and ProgressBar -->
+          <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="300dp">
 
-        <Button
-            android:id="@+id/btnfacebook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="5dp"
-            android:drawableTop="@drawable/ic_facebook"
-            android:drawablePadding="4dp"
-            android:text="Facebook"
-            android:textSize="13sp"
-            android:fontFamily="@font/faster_one"
-            android:textColor="@color/black"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="5dp" />
+            <ImageView
+                android:id="@+id/gifImageView_about"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter" />
 
-        <Button
-            android:id="@+id/btnx"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="5dp"
-            android:drawableTop="@drawable/ic_x"
-            android:drawablePadding="4dp"
-            android:text="x"
-            android:textSize="13sp"
-            android:fontFamily="@font/faster_one"
-            android:textColor="@color/black"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="5dp" />
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:indeterminateTint="@android:color/black"
+                android:visibility="visible" />
+          </FrameLayout>
 
-      </LinearLayout>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="20dp"
+              android:fontFamily="@font/averia_libre_light"
+              android:text="Yene Shop Manager"
+              android:textColor="@color/black"
+              android:textSize="25sp"
+              android:gravity="center"
+              android:textStyle="bold" />
 
+          <TextView
+              android:id="@+id/app_version"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:fontFamily="@font/averia_libre_light"
+              android:paddingVertical="5dp"
+              android:text="version: 1.0.6"
+              android:textColor="@color/black"
+              android:textSize="18sp" />
 
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:fontFamily="@font/averia_libre_light"
+              android:paddingTop="15dp"
+              android:text="Developed by Abel G."
+              android:textColor="@color/black"
+              android:textStyle="bold"
+              android:textSize="18sp" />
 
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
 
     </LinearLayout>
   </androidx.core.widget.NestedScrollView>
