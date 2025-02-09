@@ -17,9 +17,6 @@
         android:theme="@style/Theme.YeneShop"
         tools:targetApi="31">
         <activity
-            android:name=".Sales_Export"
-            android:exported="false" />
-        <activity
             android:name=".Menus.ReportByCategory"
             android:exported="false" />
         <activity
@@ -54,6 +51,7 @@
         <activity
             android:name=".HomeActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_home"
             android:resizeableActivity="true"
             android:theme="@style/Theme.YeneShop.NoActionBar"
