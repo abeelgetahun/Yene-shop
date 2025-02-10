@@ -1,108 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@color/white"
-    android:orientation="vertical"
-    tools:context=".Signup"
-    android:padding="20dp">
+    tools:context=".Signup">
 
-    <!-- Logo ImageView -->
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="141dp"
-        android:layout_height="130dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp"
-        app:srcCompat="@drawable/ic_app" />
-
-    <!-- Welcome Text -->
-<TextView
-android:id="@+id/welcome"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:fontFamily="@font/bangers"
-android:text="Welcome Back"
-android:textColor="#1F1111"
-android:textSize="60sp"
-android:gravity="center"
- />
-
-    <!-- Sign up message -->
-<TextView
-android:id="@+id/signmessage"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:gravity="center"
-android:text="Sign up to continue"
-android:textColor="@color/star_message_color"
-android:textSize="16sp" />
-
-    <!-- Input fields container -->
-<LinearLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginTop="30dp"
-    android:layout_marginHorizontal="30dp"
-android:orientation="vertical">
-
-    <!-- Owner Name Input -->
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxStrokeColor="@color/black"
-        app:hintTextColor="@color/black"
-        app:boxStrokeWidth="2dp">
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ownername"
+        <!-- Logo ImageView -->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="40dp"
+            app:srcCompat="@drawable/ic_app" />
+
+        <!-- Welcome Text -->
+        <TextView
+            android:id="@+id/welcome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Owner name"
-            android:inputType="textCapWords"
-            android:textColor="@color/black"
-            android:padding="16dp"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:fontFamily="@font/bangers"
+            android:text="Welcome Back"
+            android:textColor="#1F1111"
+            android:textSize="45sp"
+            android:textAlignment="center"
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
-    <!-- Shop Name Input -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxStrokeColor="@color/black"
-        app:hintTextColor="@color/black"
-        app:boxStrokeWidth="2dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/shopname"
+        <!-- Sign-up message -->
+        <TextView
+            android:id="@+id/signmessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Shop name"
-            android:inputType="textCapWords"
-            android:textColor="@color/black"
-            android:padding="16dp"/>
-    </com.google.android.material.textfield.TextInputLayout>
-</LinearLayout>
+            android:gravity="center"
+            android:text="Sign up to continue"
+            android:textColor="@color/star_message_color"
+            android:textSize="16sp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
-    <!-- Sign-up Button -->
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/background"
-        android:fontFamily="@font/alfa_slab_one"
-        android:paddingHorizontal="15dp"
-        android:paddingVertical="5dp"
-        android:text="Get Started"
-        android:textColor="#ffffff"
-        android:textSize="20dp" />
-</LinearLayout>
+        <!-- Input fields container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="vertical">
+
+            <!-- Owner Name Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ownername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Owner name"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/black"
+                    android:padding="12dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Shop Name Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/shopname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Shop name"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/black"
+                    android:padding="12dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <!-- Sign-up Button -->
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/background"
+            android:fontFamily="@font/alfa_slab_one"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:text="Get Started"
+            android:textColor="#ffffff"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
+</ScrollView>
