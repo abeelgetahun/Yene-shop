@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -139,54 +141,57 @@ public class HomeActivity extends AppCompatActivity {
             viewPager.setAdapter(fragmentAdapter);
             tabLayout.setupWithViewPager(viewPager);
 
-            // Set tab text appearance
-            tabLayout.setTabTextColors(Color.BLACK, Color.BLACK); // Set both normal and selected text color to black
+            // Set initial tab colors and indicator
+            tabLayout.setTabTextColors(Color.BLACK, Color.WHITE);
+            tabLayout.setSelectedTabIndicatorColor(Color.WHITE);
+            tabLayout.setSelectedTabIndicatorHeight((int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 3f, getResources().getDisplayMetrics()));
 
-            // Create rounded rectangle background drawable
-            GradientDrawable selectedBackground = new GradientDrawable();
-            selectedBackground.setShape(GradientDrawable.RECTANGLE);
-            selectedBackground.setCornerRadius(getResources().getDimension(R.dimen.tab_corner_radius));
-            selectedBackground.setColor(getResources().getColor(R.color.card_color));
+            // Set up tabs with custom layouts
+            for (int i = 0; i < tabLayout.getTabCount(); i++) {
+                TabLayout.Tab tab = tabLayout.getTabAt(i);
+                if (tab != null) {
+                    View customView = createCustomTabView(fragmentAdapter.getPageTitle(i).toString(),
+                            fragmentAdapter.getPageIcon(i));
+                    tab.setCustomView(customView);
+
+                    // Set initial state for unselected tabs
+                    TextView textView = customView.findViewById(R.id.tab_text);
+                    ImageView iconView = customView.findViewById(R.id.tab_icon);
+                    textView.setTextColor(Color.BLACK);
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+                    textView.setTypeface(Typeface.DEFAULT);
+                    iconView.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
+                }
+            }
 
             // Add tab selection listener
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
-                    View tabView = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(tab.getPosition());
-                    if (tabView != null) {
-                        tabView.setBackground(selectedBackground);
+                    View customView = tab.getCustomView();
+                    if (customView != null) {
+                        TextView textView = customView.findViewById(R.id.tab_text);
+                        ImageView iconView = customView.findViewById(R.id.tab_icon);
 
-                        // Make text bold when selected
-                        TextView textView = findTextView(tabView);
-                        if (textView != null) {
-                            textView.setTypeface(Typeface.DEFAULT_BOLD);
-                        }
-                    }
-
-                    Drawable icon = tab.getIcon();
-                    if (icon != null) {
-                        Drawable wrappedIcon = DrawableCompat.wrap(icon).mutate();
-                        DrawableCompat.setTint(wrappedIcon, Color.WHITE);
-                        tab.setIcon(wrappedIcon);
+                        textView.setTypeface(Typeface.DEFAULT_BOLD);
+                        textView.setTextColor(Color.WHITE);
+                        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                        iconView.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
                     }
                 }
 
                 @Override
                 public void onTabUnselected(TabLayout.Tab tab) {
-                    View tabView = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(tab.getPosition());
-                    if (tabView != null) {
-                        tabView.setBackgroundColor(Color.TRANSPARENT);
+                    View customView = tab.getCustomView();
+                    if (customView != null) {
+                        TextView textView = customView.findViewById(R.id.tab_text);
+                        ImageView iconView = customView.findViewById(R.id.tab_icon);
 
-                        // Reset text to normal weight when unselected
-                        TextView textView = findTextView(tabView);
-                        if (textView != null) {
-                            textView.setTypeface(Typeface.DEFAULT);
-                        }
-                    }
-
-                    Drawable icon = tab.getIcon();
-                    if (icon != null) {
-                        icon.clearColorFilter();
+                        textView.setTypeface(Typeface.DEFAULT);
+                        textView.setTextColor(Color.BLACK);
+                        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+                        iconView.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
                     }
                 }
 
@@ -196,71 +201,30 @@ public class HomeActivity extends AppCompatActivity {
                 }
             });
 
-            for (int i = 0; i < tabLayout.getTabCount(); i++) {
-                TabLayout.Tab tab = tabLayout.getTabAt(i);
-                if (tab != null) {
-                    try {
-                        Drawable icon = ContextCompat.getDrawable(this, fragmentAdapter.getPageIcon(i));
-                        if (icon != null) {
-                            int size = (int) TypedValue.applyDimension(
-                                    TypedValue.COMPLEX_UNIT_DIP,
-                                    24,
-                                    getResources().getDisplayMetrics()
-                            );
-                            icon.setBounds(0, 0, size, size);
-                            tab.setIcon(icon);
-                        }
-
-                        View tabView = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(i);
-                        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tabView.getLayoutParams();
-                        int marginDp = 8;
-                        int marginPx = (int) TypedValue.applyDimension(
-                                TypedValue.COMPLEX_UNIT_DIP,
-                                marginDp,
-                                getResources().getDisplayMetrics()
-                        );
-                        params.setMargins(marginPx, 0, marginPx, 0);
-
-                        // Set initial background for each tab
-                        GradientDrawable background = new GradientDrawable();
-                        background.setShape(GradientDrawable.RECTANGLE);
-                        background.setCornerRadius(getResources().getDimension(R.dimen.tab_corner_radius));
-                        tabView.setBackground(background);
-
-                        // Set initial text color and style
-                        TextView textView = findTextView(tabView);
-                        if (textView != null) {
-                            textView.setTextColor(Color.BLACK);
-                            textView.setTypeface(Typeface.DEFAULT);
-                        }
-
-                        tabView.requestLayout();
-                    } catch (Resources.NotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            tabLayout.post(() -> {
-                ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
-                for (int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
-                    View tab = slidingTabStrip.getChildAt(i);
-                    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tab.getLayoutParams();
-                    params.rightMargin = (int) TypedValue.applyDimension(
-                            TypedValue.COMPLEX_UNIT_DIP,
-                            16,
-                            getResources().getDisplayMetrics()
-                    );
-                }
-            });
-
+            // Set initial selected tab and trigger selection
             viewPager.setCurrentItem(1);
+            TabLayout.Tab initialTab = tabLayout.getTabAt(1);
+            if (initialTab != null) {
+                initialTab.select();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "Error setting up tabs", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private View createCustomTabView(String title, int iconResId) {
+        View view = getLayoutInflater().inflate(R.layout.custom_tab_layout, null);
+        TextView textView = view.findViewById(R.id.tab_text);
+        ImageView iconView = view.findViewById(R.id.tab_icon);
+
+        textView.setText(title);
+        iconView.setImageResource(iconResId);
+
+        return view;
+    }
+
 
     // Helper method to find TextView in tab view
     private TextView findTextView(View view) {

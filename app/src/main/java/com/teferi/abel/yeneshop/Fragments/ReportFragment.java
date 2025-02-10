@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
@@ -40,6 +41,7 @@ public class ReportFragment extends Fragment {
     private SoldItemsAdapter soldItemsAdapter;
     private Button dailyButton, monthlyButton;
     private boolean isDailySelected = true;
+    private ProgressBar loadingIndicator;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +64,7 @@ public class ReportFragment extends Fragment {
         dailyButton = view.findViewById(R.id.report_page_daily);
         monthlyButton = view.findViewById(R.id.report_page_monthly);
         mainHandler = new Handler(Looper.getMainLooper());
+        loadingIndicator = view.findViewById(R.id.loading_progress);
     }
 
     private void initializeDatabase() {
@@ -73,7 +76,6 @@ public class ReportFragment extends Fragment {
         soldItemsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         soldItemsAdapter = new SoldItemsAdapter();
         soldItemsRecyclerView.setAdapter(soldItemsAdapter);
-        // Set the click listener for reversal functionality
         soldItemsAdapter.setOnItemClickListener(sale -> {
             new AlertDialog.Builder(getContext())
                     .setTitle("Reverse Sale")
@@ -106,11 +108,6 @@ public class ReportFragment extends Fragment {
         setButtonSelected(monthlyButton, false);
     }
 
-    /**
-     * Updates the button appearance.
-     * Selected: background tint black, text white.
-     * Unselected: background tint white, text black.
-     */
     private void setButtonSelected(Button button, boolean isSelected) {
         if (isSelected) {
             button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black)));
@@ -136,6 +133,8 @@ public class ReportFragment extends Fragment {
     }
 
     private void updateProfitReports() {
+        showLoadingIndicator();
+
         CompletableFuture.supplyAsync(() -> {
             try {
                 List<Sales> allSales = mainDao.getAllSales();
@@ -155,6 +154,7 @@ public class ReportFragment extends Fragment {
                 return null;
             }
         }).thenAcceptAsync(reports -> {
+            hideLoadingIndicator();
             if (isFragmentVisible && reports != null) {
                 updateUIWithReports(reports);
             }
@@ -162,6 +162,8 @@ public class ReportFragment extends Fragment {
     }
 
     private void updateSoldItemsReport(boolean isDaily) {
+        showLoadingIndicator();
+
         CompletableFuture.supplyAsync(() -> {
             try {
                 List<Sales> allSales = mainDao.getAllSales();
@@ -202,6 +204,7 @@ public class ReportFragment extends Fragment {
                 return null;
             }
         }).thenAcceptAsync(sales -> {
+            hideLoadingIndicator();
             if (isFragmentVisible && sales != null) {
                 mainHandler.post(() -> soldItemsAdapter.setSoldItems(sales));
             }
@@ -210,13 +213,17 @@ public class ReportFragment extends Fragment {
 
     private ProfitReport calculateProfitForDateRange(List<Sales> sales, Date startDate, Date endDate) {
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy hh:mm a", Locale.ENGLISH);
+        double totalSales = 0;
         double totalProfit = 0;
         double totalTaxAmount = 0;
         double netProfit = 0;
+
         for (Sales sale : sales) {
             try {
                 Date saleDate = sdf.parse(sale.getDate());
                 if (saleDate != null && !saleDate.before(startDate) && !saleDate.after(endDate)) {
+                    double saleAmount = sale.getSelling_price() * sale.getQuantity();
+                    totalSales += saleAmount;
                     double profit = (sale.getSelling_price() - sale.getPurchasing_price()) * sale.getQuantity();
                     double taxAmount = (sale.getSelling_price() * sale.getQuantity() * sale.getTax()) / 100;
                     totalProfit += profit;
@@ -227,7 +234,7 @@ public class ReportFragment extends Fragment {
             }
         }
         netProfit = totalProfit - totalTaxAmount;
-        return new ProfitReport(totalProfit, totalTaxAmount, netProfit);
+        return new ProfitReport(totalSales, totalProfit, totalTaxAmount, netProfit);
     }
 
     private void updateUIWithReports(ProfitReports reports) {
@@ -243,27 +250,18 @@ public class ReportFragment extends Fragment {
 
     private String formatProfitReport(ProfitReport profit) {
         return String.format(Locale.getDefault(),
-                "Gross Profit: %.2f\nTax Amount: %.2f\nNet Profit: %.2f",
-                profit.totalProfit, profit.totalTaxAmount, profit.netProfit);
+                "Total Sales: %.2f\nGross Profit: %.2f\nTax Amount: %.2f\nNet Profit: %.2f",
+                profit.totalSales, profit.totalProfit, profit.totalTaxAmount, profit.netProfit);
     }
 
-    /**
-     * Reverses the sale:
-     * - Finds the item by sale.getItem_id(). If found, adds the sale quantity.
-     * - If not found, creates a new item based on sale details.
-     * - Deletes the sale record from the sales table.
-     */
     private void reverseSale(Sales sale) {
         CompletableFuture.runAsync(() -> {
-            // Check if the item already exists using sale.getItem_id()
             Items item = mainDao.getItemById(sale.getItem_id());
             if (item != null) {
-                // Update the item quantity
                 double newQuantity = item.getQuantity() + sale.getQuantity();
                 item.setQuantity(newQuantity);
                 mainDao.update(item);
             } else {
-                // Create a new item using sale details
                 Items newItem = new Items();
                 newItem.setName(sale.getName());
                 newItem.setCategory(sale.getCategory());
@@ -274,23 +272,23 @@ public class ReportFragment extends Fragment {
                 newItem.setDate(sale.getDate());
                 mainDao.insert(newItem);
             }
-            // Delete the sale record from sales history
             mainDao.deleteSale(sale);
         }).thenRunAsync(() -> {
             mainHandler.post(() -> {
                 Toast.makeText(getContext(), "Sale reversed successfully", Toast.LENGTH_SHORT).show();
-                // Refresh the sales list after reversal
                 updateSoldItemsReport(isDailySelected);
             });
         }, runnable -> mainHandler.post(runnable));
     }
 
-    // Helper classes for profit reports
     private static class ProfitReport {
+        final double totalSales;
         final double totalProfit;
         final double totalTaxAmount;
         final double netProfit;
-        ProfitReport(double totalProfit, double totalTaxAmount, double netProfit) {
+
+        ProfitReport(double totalSales, double totalProfit, double totalTaxAmount, double netProfit) {
+            this.totalSales = totalSales;
             this.totalProfit = totalProfit;
             this.totalTaxAmount = totalTaxAmount;
             this.netProfit = netProfit;
@@ -300,9 +298,18 @@ public class ReportFragment extends Fragment {
     private static class ProfitReports {
         final ProfitReport dailyProfit;
         final ProfitReport monthlyProfit;
+
         ProfitReports(ProfitReport dailyProfit, ProfitReport monthlyProfit) {
             this.dailyProfit = dailyProfit;
             this.monthlyProfit = monthlyProfit;
         }
+    }
+
+    private void showLoadingIndicator() {
+        mainHandler.post(() -> loadingIndicator.setVisibility(View.VISIBLE));
+    }
+
+    private void hideLoadingIndicator() {
+        mainHandler.post(() -> loadingIndicator.setVisibility(View.GONE));
     }
 }
