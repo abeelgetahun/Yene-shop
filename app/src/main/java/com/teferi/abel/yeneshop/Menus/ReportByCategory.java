@@ -50,6 +50,8 @@ public class ReportByCategory extends AppCompatActivity {
     private LottieAnimationView exportAnimation;
     private LottieAnimationView salesExportAnimation;
 
+    private static final int REQUEST_WRITE_PERMISSION = 101;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
