@@ -36,4 +36,11 @@
         <item name="android:textColorHint">@color/black</item>
     </style>
 
+
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">13sp</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
 </resources>
