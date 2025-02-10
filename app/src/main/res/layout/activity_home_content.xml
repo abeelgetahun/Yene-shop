@@ -85,22 +85,20 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:background="@android:color/transparent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:tabBackground="@drawable/tab_background_selector"
+                app:tabBackground="@android:color/transparent"
                 app:tabGravity="fill"
+                app:tabIndicatorColor="@color/white"
+                app:tabIndicatorHeight="3dp"
                 app:tabInlineLabel="false"
                 app:tabMode="fixed"
                 app:tabPadding="8dp"
-                app:tabRippleColor="@color/btn_color"
-                app:tabSelectedTextColor="@color/white"
-                app:tabIndicatorColor="@color/btn_color"
-                app:tabTextColor="@color/black"
-                app:tabIconTint="@color/black"
-                app:tabIndicatorHeight="5dp"
-                android:clipToPadding="false"
-                android:clipChildren="false" />
+                app:tabRippleColor="@android:color/transparent"
+                style="@style/CustomTabLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
