@@ -10,8 +10,8 @@ android {
         applicationId = "com.teferi.abel.yenshop"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "3.0"
+        versionCode = 2
+        versionName = "3.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -57,6 +57,7 @@ dependencies {
     annotationProcessor(libs.compiler)
 
     implementation (libs.android.lottie)
+
 
 }
 

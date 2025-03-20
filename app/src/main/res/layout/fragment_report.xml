@@ -20,12 +20,13 @@
 
       <!-- Daily Profit Report -->
       <TextView
+          android:id="@+id/daily_report_analysis"
           android:text="Daily Report"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="10dp"
           android:textStyle="bold"
-          android:fontFamily="@font/arbutus"
+          android:fontFamily="@font/afacad"
           android:textColor="@color/black"
           android:textSize="20sp"
           android:gravity="center"/>
@@ -36,16 +37,17 @@
           android:layout_marginTop="5dp"
           android:layout_marginBottom="5dp"
           android:fontFamily="@font/arbutus"
-          android:textColor="#030081"
-          android:textSize="15sp"
+          android:textColor="@color/background"
+          android:textSize="14sp"
           android:gravity="center"/>
 
       <!-- Monthly Profit Report -->
       <TextView
+          android:id="@+id/monthly_report_analysis"
           android:text="Monthly Report"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/arbutus"
+          android:fontFamily="@font/afacad"
           android:textColor="@color/black"
           android:textStyle="bold"
           android:textSize="20sp"
@@ -56,8 +58,8 @@
           android:layout_height="80dp"
           android:layout_marginTop="5dp"
           android:fontFamily="@font/arbutus"
-          android:textColor="#030081"
-          android:textSize="15sp"
+          android:textColor="@color/background"
+          android:textSize="14sp"
           android:gravity="center"/>
 
       <!-- Buttons for Daily and Monthly -->
